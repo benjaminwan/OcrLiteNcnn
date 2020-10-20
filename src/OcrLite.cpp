@@ -66,7 +66,7 @@ bool OcrLite::initModels(const char *path) {
 }
 
 void OcrLite::Logger(const char *format, ...) {
-    char buffer[128] = {0};
+    char buffer[1024] = {0};
     va_list args;
     va_start(args, format);
     vsprintf(buffer, format, args);
@@ -159,6 +159,7 @@ Angle OcrLite::getAngle(cv::Mat &src) {
 TextLine OcrLite::scoreToTextLine(const float *srcData, int h, int w) {
     std::string strRes;
     int lastIndex = 0;
+    int keySize = keys.size();
     std::vector<float> scores;
     for (int i = 0; i < h; i++) {
         //find max score
@@ -170,7 +171,7 @@ TextLine OcrLite::scoreToTextLine(const float *srcData, int h, int w) {
                 maxIndex = j;
             }
         }
-        if (maxIndex > 0 && (!(i > 0 && maxIndex == lastIndex))) {
+        if (maxIndex > 0 && maxIndex < keySize && (!(i > 0 && maxIndex == lastIndex))) {
             scores.emplace_back(maxValue);
             strRes.append(keys[maxIndex - 1]);
         }
