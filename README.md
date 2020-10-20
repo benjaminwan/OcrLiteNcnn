@@ -17,12 +17,15 @@ ChineseOcr Lite Onnx To Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理(
 整合了如下算法：
 DBNet(图像分割)+AngleNet(文字方向检测)+CRNN(文字识别)
 
-[模型下载地址](https://github.com/ouyanghuiyu/chineseocr_lite/tree/onnx/models)
+[模型下载地址](https://github.com/ouyanghuiyu/chineseocr_lite/tree/onnx/ncnn_project/models)
 ```
 OcrLiteOnnxToNcnn/models
-├── angle_net.onnx
-├── crnn_lite_lstm.onnx
-├── dbnet.onnx
+├── angle_op.bin
+├── angle_op.param
+├── crnn_lite_op.bin
+├── crnn_lite_op.param
+├── dbnet_op.bin
+├── dbnet_op.param
 └── keys.txt
 ```
 
