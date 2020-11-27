@@ -1,5 +1,6 @@
-:: Set Param
 @ECHO OFF
+chcp 65001
+cls
 @SETLOCAL
 
 echo 请选择编译选项并回车: 1)编译可执行文件，2)编译动态库:
