@@ -99,11 +99,17 @@ void drawTextBox(cv::Mat &boxImg, cv::RotatedRect &rect, int thickness) {
 }
 
 void drawTextBox(cv::Mat &boxImg, const std::vector<cv::Point> &box, int thickness) {
-    auto color = cv::Scalar(0, 0, 255);
+    auto color = cv::Scalar(255, 0, 0);// R(255) G(0) B(0)
     cv::line(boxImg, box[0], box[1], color, thickness);
     cv::line(boxImg, box[1], box[2], color, thickness);
     cv::line(boxImg, box[2], box[3], color, thickness);
     cv::line(boxImg, box[3], box[0], color, thickness);
+}
+
+void drawTextBoxes(cv::Mat &boxImg, std::vector<TextBox> &textBoxes, int thickness) {
+    for (int i = 0; i < textBoxes.size(); ++i) {
+        drawTextBox(boxImg, textBoxes[i].boxPoint, thickness);
+    }
 }
 
 cv::Mat matRotateClockWise180(cv::Mat src) {
@@ -159,8 +165,8 @@ cv::Mat GetRotateCropImage(const cv::Mat &src, std::vector<cv::Point> box) {
 
     cv::Mat partImg;
     cv::warpPerspective(imgCrop, partImg, M,
-                        cv::Size(imgCropWidth, imgCropHeight),
-                        cv::BORDER_REPLICATE);
+                    cv::Size(imgCropWidth, imgCropHeight),
+                    cv::BORDER_REPLICATE);
 
     if (float(partImg.rows) >= float(partImg.cols) * 1.5) {
         cv::Mat srcCopy = cv::Mat(partImg.rows, partImg.cols, partImg.depth());
@@ -172,7 +178,7 @@ cv::Mat GetRotateCropImage(const cv::Mat &src, std::vector<cv::Point> box) {
     }
 }
 
-cv::Mat adjustAngleImg(cv::Mat &src, int dstWidth, int dstHeight) {
+cv::Mat adjustTargetImg(cv::Mat &src, int dstWidth, int dstHeight) {
     cv::Mat srcResize;
     float scale = (float) dstHeight / (float) src.rows;
     int angleWidth = int((float) src.cols * scale);
@@ -307,6 +313,15 @@ void unClip(std::vector<cv::Point> &minBoxVec, float allEdgeSize, std::vector<cv
             outVec.emplace_back(tmpPoly[j].X, tmpPoly[j].Y);
         }
     }
+}
+
+std::vector<int> getAngleIndexes(std::vector<Angle> &angles) {
+    std::vector<int> angleIndexes;
+    angleIndexes.reserve(angles.size());
+    for (int i = 0; i < angles.size(); ++i) {
+        angleIndexes.push_back(angles[i].index);
+    }
+    return angleIndexes;
 }
 
 void saveImg(cv::Mat &img, const char *imgPath) {

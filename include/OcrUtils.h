@@ -22,13 +22,15 @@ void drawTextBox(cv::Mat &boxImg, cv::RotatedRect &rect, int thickness);
 
 void drawTextBox(cv::Mat &boxImg, const std::vector<cv::Point> &box, int thickness);
 
+void drawTextBoxes(cv::Mat &boxImg, std::vector<TextBox> &textBoxes, int thickness);
+
 cv::Mat matRotateClockWise180(cv::Mat src);
 
 cv::Mat matRotateClockWise90(cv::Mat src);
 
 cv::Mat GetRotateCropImage(const cv::Mat &src, std::vector<cv::Point> box);
 
-cv::Mat adjustAngleImg(cv::Mat &src, int dstWidth, int dstHeight);
+cv::Mat adjustTargetImg(cv::Mat &src, int dstWidth, int dstHeight);
 
 int getMiniBoxes(std::vector<cv::Point> &inVec,
                  std::vector<cv::Point> &minBoxVec,
@@ -38,6 +40,8 @@ int getMiniBoxes(std::vector<cv::Point> &inVec,
 float boxScoreFast(cv::Mat &mapmat, std::vector<cv::Point> &_box);
 
 void unClip(std::vector<cv::Point> &minBoxVec, float allEdgeSize, std::vector<cv::Point> &outVec, float unClipRatio);
+
+std::vector<int> getAngleIndexes(std::vector<Angle> &angles);
 
 void saveImg(cv::Mat &img, const char *imgPath);
 
