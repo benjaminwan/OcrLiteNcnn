@@ -21,7 +21,7 @@ public:
 
     bool initModels(const char *path);
 
-    //void Logger(const char *format, ...);
+    void Logger(const char *format, ...);
 
     OcrResult detect(const char *path, const char *imgName,
                      int padding, int imgResize,
@@ -29,11 +29,11 @@ public:
                      float unClipRatio, bool doAngle, bool mostAngle);
 
 private:
-    //bool isOutputConsole = false;
+    bool isOutputConsole = false;
     bool isOutputPartImg = false;
-    //bool isOutputResultTxt = false;
+    bool isOutputResultTxt = false;
     bool isOutputResultImg = false;
-    //FILE *resultTxt;
+    FILE *resultTxt;
     int numThread = 4;
     DbNet dbNet;
     AngleNet angleNet;

@@ -6,20 +6,22 @@ OcrLite::OcrLite(int numOfThread) {
 }
 
 OcrLite::~OcrLite() {
-    //fclose(resultTxt);
+    if (isOutputResultTxt) {
+        fclose(resultTxt);
+    }
 }
 
 void OcrLite::initLogger(bool isConsole, bool isPartImg, bool isResultImg) {
-    //isOutputConsole = isConsole;
+    isOutputConsole = isConsole;
     isOutputPartImg = isPartImg;
     isOutputResultImg = isResultImg;
 }
 
 void OcrLite::enableResultTxt(const char *path, const char *imgName) {
-    //isOutputResultTxt = true;
-    /*std::string resultTxtPath = getResultTxtFilePath(path, imgName);
+    isOutputResultTxt = true;
+    std::string resultTxtPath = getResultTxtFilePath(path, imgName);
     printf("resultTxtPath(%s)\n", resultTxtPath.c_str());
-    resultTxt = fopen(resultTxtPath.c_str(), "w");*/
+    resultTxt = fopen(resultTxtPath.c_str(), "w");
 }
 
 bool OcrLite::initModels(const char *path) {
@@ -40,16 +42,17 @@ bool OcrLite::initModels(const char *path) {
     return true;
 }
 
-/*void OcrLite::Logger(const char *format, ...) {
-    //if (!(isOutputConsole || isOutputResultTxt)) return;
-    buffer = (char *) malloc(40960);
+void OcrLite::Logger(const char *format, ...) {
+    if (!(isOutputConsole || isOutputResultTxt)) return;
+    char *buffer = (char *) malloc(8192);
     va_list args;
     va_start(args, format);
     vsprintf(buffer, format, args);
     va_end(args);
     if (isOutputConsole) printf("%s", buffer);
     if (isOutputResultTxt) fprintf(resultTxt, "%s", buffer);
-}*/
+    free(buffer);
+}
 
 cv::Mat makePadding(cv::Mat &src, const int padding) {
     if (padding <= 0) return src;
