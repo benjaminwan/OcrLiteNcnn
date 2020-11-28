@@ -3,6 +3,7 @@
 #include "version.h"
 #include "OcrLite.h"
 #include "main.h"
+#include "OcrUtils.h"
 
 void printHelp(FILE *out, const char *argv0) {
     fprintf(out, " ------- Usage -------\n");
@@ -118,8 +119,8 @@ int main(int argc, char **argv) {
             true);//isOutputResultImg
 
     ocrLite.enableResultTxt(imgPath.c_str(), imgName.c_str());
-    ocrLite.Logger("=====Input Params=====\n");
-    ocrLite.Logger(
+    Logger("=====Input Params=====\n");
+    Logger(
             "numThread(%d),padding(%d),imgResize(%d),boxScoreThresh(%f),boxThresh(%f),minArea(%f),unClipRatio(%f),doAngle(%d),mostAngle(%d)\n",
             numThread, padding, imgResize, boxScoreThresh, boxThresh, minArea, unClipRatio, doAngle, mostAngle);
 
@@ -130,7 +131,7 @@ int main(int argc, char **argv) {
                                       padding, imgResize,
                                       boxScoreThresh, boxThresh, minArea,
                                       unClipRatio, doAngle, mostAngle);
-    ocrLite.Logger("%s\n", result.strRes.c_str());
+    Logger("%s\n", result.strRes.c_str());
 
     return 0;
 }

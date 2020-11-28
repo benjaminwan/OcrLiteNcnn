@@ -4,6 +4,11 @@
 #include <opencv2/core.hpp>
 #include "OcrStruct.h"
 
+#define __ENABLE_CONSOLE__ true
+#define Logger(format, ...) {\
+  if(__ENABLE_CONSOLE__) printf(format,##__VA_ARGS__); \
+}
+
 double getCurrentTime();
 
 std::wstring strToWstr(std::string str);

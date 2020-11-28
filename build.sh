@@ -4,7 +4,7 @@ function buildOcrLite() {
 mkdir -p build
 pushd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+make -j4
 popd
 }
 
@@ -12,7 +12,7 @@ function buildOcrLiteLib() {
 mkdir -p build-lib
 pushd build-lib
 cmake -DCMAKE_BUILD_TYPE=Release -DOCR_LITE_LIB=ON ..
-make
+make -j4
 popd
 }
 

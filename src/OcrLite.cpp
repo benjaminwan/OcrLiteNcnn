@@ -1,28 +1,25 @@
 #include "OcrLite.h"
 #include "OcrUtils.h"
-#include <stdarg.h> //windows&linux
 
 OcrLite::OcrLite(int numOfThread) {
     numThread = numOfThread;
 }
 
 OcrLite::~OcrLite() {
-    if (isOutputResultTxt) {
-        fclose(resultTxt);
-    }
+    //fclose(resultTxt);
 }
 
 void OcrLite::initLogger(bool isConsole, bool isPartImg, bool isResultImg) {
-    isOutputConsole = isConsole;
+    //isOutputConsole = isConsole;
     isOutputPartImg = isPartImg;
     isOutputResultImg = isResultImg;
 }
 
 void OcrLite::enableResultTxt(const char *path, const char *imgName) {
-    isOutputResultTxt = true;
-    std::string resultTxtPath = getResultTxtFilePath(path, imgName);
+    //isOutputResultTxt = true;
+    /*std::string resultTxtPath = getResultTxtFilePath(path, imgName);
     printf("resultTxtPath(%s)\n", resultTxtPath.c_str());
-    resultTxt = fopen(resultTxtPath.c_str(), "w");
+    resultTxt = fopen(resultTxtPath.c_str(), "w");*/
 }
 
 bool OcrLite::initModels(const char *path) {
@@ -43,17 +40,16 @@ bool OcrLite::initModels(const char *path) {
     return true;
 }
 
-void OcrLite::Logger(const char *format, ...) {
-    if (!(isOutputConsole || isOutputResultTxt)) return;
-    char *buffer = (char *) malloc(4096);
+/*void OcrLite::Logger(const char *format, ...) {
+    //if (!(isOutputConsole || isOutputResultTxt)) return;
+    buffer = (char *) malloc(40960);
     va_list args;
     va_start(args, format);
     vsprintf(buffer, format, args);
     va_end(args);
     if (isOutputConsole) printf("%s", buffer);
     if (isOutputResultTxt) fprintf(resultTxt, "%s", buffer);
-    free(buffer);
-}
+}*/
 
 cv::Mat makePadding(cv::Mat &src, const int padding) {
     if (padding <= 0) return src;
@@ -68,7 +64,6 @@ OcrResult OcrLite::detect(const char *path, const char *imgName,
                           float boxScoreThresh, float boxThresh, float minArea,
                           float unClipRatio, bool doAngle, bool mostAngle) {
     std::string imgFile = getSrcImgFilePath(path, imgName);
-
     cv::Mat bgrSrc = imread(imgFile, cv::IMREAD_COLOR);//default : BGR
     cv::Mat originSrc;
     cvtColor(bgrSrc, originSrc, cv::COLOR_BGR2RGB);// convert to RGB
@@ -100,7 +95,7 @@ OcrResult OcrLite::detect(const char *path, const char *imgName,
 }
 
 std::vector<cv::Mat> OcrLite::getPartImages(cv::Mat &src, std::vector<TextBox> &textBoxes,
-                                   const char *path, const char *imgName) {
+                                            const char *path, const char *imgName) {
     std::vector<cv::Mat> partImages;
     for (int i = 0; i < textBoxes.size(); ++i) {
         cv::Mat partImg = GetRotateCropImage(src, textBoxes[i].boxPoint);
@@ -185,9 +180,9 @@ OcrResult OcrLite::detect(const char *path, const char *imgName,
 
     std::vector<TextBlock> textBlocks;
     for (int i = 0; i < textLines.size(); ++i) {
-        TextBlock textBlock(textBoxes[i].boxPoint, textBoxes[i].score, angles[i].index, angles[i].score,
+        TextBlock textBlock{textBoxes[i].boxPoint, textBoxes[i].score, angles[i].index, angles[i].score,
                             angles[i].time, textLines[i].text, textLines[i].charScores, textLines[i].time,
-                            angles[i].time + textLines[i].time);
+                            angles[i].time + textLines[i].time};
         textBlocks.emplace_back(textBlock);
     }
 
@@ -218,5 +213,5 @@ OcrResult OcrLite::detect(const char *path, const char *imgName,
         strRes.append("\n");
     }
 
-    return OcrResult(textBlocks, dbNetTime, textBoxImg, fullTime, strRes);
+    return OcrResult{dbNetTime, textBlocks, textBoxImg, fullTime, strRes};
 }

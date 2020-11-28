@@ -1,6 +1,8 @@
 #include "AngleNet.h"
 #include "OcrUtils.h"
 #include <numeric>
+#include <map>
+#include <omp.h>
 
 AngleNet::~AngleNet() {
     net.clear();
@@ -31,7 +33,7 @@ Angle scoreToAngle(const float *srcData, int w) {
             maxValue = srcData[i];
         }
     }
-    return Angle(angleIndex, maxValue);
+    return {angleIndex, maxValue};
 }
 
 Angle AngleNet::getAngle(cv::Mat &src) {
@@ -48,18 +50,21 @@ Angle AngleNet::getAngle(cv::Mat &src) {
 }
 
 std::vector<Angle> AngleNet::getAngles(std::vector<cv::Mat> &partImgs, const char *path,
-                                  const char *imgName, bool doAngle, bool mostAngle) {
+                                       const char *imgName, bool doAngle, bool mostAngle) {
     std::vector<Angle> angles;
+    std::map<int, Angle> angleMap;
     if (doAngle) {
+#pragma omp parallel for num_threads(numThread)
         for (int i = 0; i < partImgs.size(); ++i) {
-            //getAngle
             double startAngle = getCurrentTime();
             auto angleImg = adjustTargetImg(partImgs[i], dstWidth, dstHeight);
             Angle angle = getAngle(angleImg);
             double endAngle = getCurrentTime();
             angle.time = endAngle - startAngle;
 
-            angles.emplace_back(angle);
+#pragma omp critical
+            angleMap[i] = angle;
+            //angles.emplace_back(angle);
 
             //OutPut AngleImg
             if (isOutputAngleImg) {
@@ -67,10 +72,12 @@ std::vector<Angle> AngleNet::getAngles(std::vector<cv::Mat> &partImgs, const cha
                 saveImg(angleImg, angleImgFile.c_str());
             }
         }
+        for (std::map<int, Angle>::iterator it = angleMap.begin(); it != angleMap.end(); it++) {
+            angles.emplace_back(it->second);
+        }
     } else {
         for (int i = 0; i < partImgs.size(); ++i) {
-            Angle angle(-1, 0.f);
-            angles.emplace_back(angle);
+            angles.emplace_back(Angle{-1, 0.f});
         }
     }
     //Most Possible AngleIndex

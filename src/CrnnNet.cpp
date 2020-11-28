@@ -2,6 +2,8 @@
 #include "OcrUtils.h"
 #include <fstream>
 #include <numeric>
+#include <map>
+#include <omp.h>
 
 CrnnNet::~CrnnNet() {
     net.clear();
@@ -74,7 +76,7 @@ TextLine CrnnNet::scoreToTextLine(const float *srcData, int h, int w) {
         }
         lastIndex = maxIndex;
     }
-    return TextLine(strRes, scores);
+    return {strRes, scores};
 }
 
 TextLine CrnnNet::getTextLine(cv::Mat &src) {
@@ -117,6 +119,8 @@ TextLine CrnnNet::getTextLine(cv::Mat &src) {
 
 std::vector<TextLine> CrnnNet::getTextLines(std::vector<cv::Mat> &partImg, const char *path, const char *imgName) {
     std::vector<TextLine> textLines;
+    std::map<int, TextLine> textLineMap;
+#pragma omp parallel for num_threads(numThread)
     for (int i = 0; i < partImg.size(); ++i) {
         //OutPut DebugImg
         if (isOutputDebugImg) {
@@ -132,17 +136,22 @@ std::vector<TextLine> CrnnNet::getTextLines(std::vector<cv::Mat> &partImg, const
 
         //Log textLine
         //Logger("textLine[%d](%s)", i, textLine.text.c_str());
-        textLines.emplace_back(textLine);
-        std::ostringstream txtScores;
+        //textLines.emplace_back(textLine);
+#pragma omp critical
+        textLineMap[i] = textLine;
+        /*std::ostringstream txtScores;
         for (int s = 0; s < textLine.charScores.size(); ++s) {
             if (s == 0) {
                 txtScores << textLine.charScores[s];
             } else {
                 txtScores << " ," << textLine.charScores[s];
             }
-        }
+        }*/
         //Logger("textScores[%d]{%s}\n", i, string(txtScores.str()).c_str());
         //Logger("crnnTime[%d](%fms)\n", i, textLine.time);
+    }
+    for (std::map<int, TextLine>::iterator it = textLineMap.begin(); it != textLineMap.end(); it++) {
+        textLines.emplace_back(it->second);
     }
     return textLines;
 }
