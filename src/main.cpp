@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
 
     OcrLite ocrLite(numThread);
     ocrLite.initLogger(
-            true,//isOutputConsole
+            false,//isOutputConsole
             false,//isOutputPartImg
             true);//isOutputResultImg
 

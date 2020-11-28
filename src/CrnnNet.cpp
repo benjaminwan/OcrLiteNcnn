@@ -120,7 +120,9 @@ TextLine CrnnNet::getTextLine(cv::Mat &src) {
 std::vector<TextLine> CrnnNet::getTextLines(std::vector<cv::Mat> &partImg, const char *path, const char *imgName) {
     std::vector<TextLine> textLines;
     std::map<int, TextLine> textLineMap;
+#ifdef __OPENMP__
 #pragma omp parallel for num_threads(numThread)
+#endif
     for (int i = 0; i < partImg.size(); ++i) {
         //OutPut DebugImg
         if (isOutputDebugImg) {
@@ -137,7 +139,9 @@ std::vector<TextLine> CrnnNet::getTextLines(std::vector<cv::Mat> &partImg, const
         //Log textLine
         //Logger("textLine[%d](%s)", i, textLine.text.c_str());
         //textLines.emplace_back(textLine);
+#ifdef __OPENMP__
 #pragma omp critical
+#endif
         textLineMap[i] = textLine;
         /*std::ostringstream txtScores;
         for (int s = 0; s < textLine.charScores.size(); ++s) {

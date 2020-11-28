@@ -2,9 +2,9 @@
 project(OcrLiteOnnxToNcnn)
 
 option(OCR_LITE_LIB "OcrLite Jni Support" OFF)
+option(OCR_LITE_OPENMP "OcrLite Enable OpenMP" ON)
 
 #set(OCR_LITE_LIB ON)
-
 if (APPLE)
     set(CMAKE_MACOSX_RPATH ON)
 endif ()
@@ -91,4 +91,8 @@ if (OCR_LITE_LIB)
 else ()
     add_executable(OcrLiteOnnxToNcnn ${OCR_COMPILE_CODE})
     target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES})
+endif ()
+
+if (OCR_LITE_OPENMP)
+    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __OPENMP__)
 endif ()

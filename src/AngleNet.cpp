@@ -54,15 +54,18 @@ std::vector<Angle> AngleNet::getAngles(std::vector<cv::Mat> &partImgs, const cha
     std::vector<Angle> angles;
     std::map<int, Angle> angleMap;
     if (doAngle) {
+#ifdef __OPENMP__
 #pragma omp parallel for num_threads(numThread)
+#endif
         for (int i = 0; i < partImgs.size(); ++i) {
             double startAngle = getCurrentTime();
             auto angleImg = adjustTargetImg(partImgs[i], dstWidth, dstHeight);
             Angle angle = getAngle(angleImg);
             double endAngle = getCurrentTime();
             angle.time = endAngle - startAngle;
-
+#ifdef __OPENMP__
 #pragma omp critical
+#endif
             angleMap[i] = angle;
             //angles.emplace_back(angle);
 
