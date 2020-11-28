@@ -14,7 +14,7 @@ GOTO:EOF
 :buildExe
 mkdir build
 pushd build
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_LITE_OPENMP=ON ..
 nmake
 popd
 GOTO:EOF
@@ -22,7 +22,7 @@ GOTO:EOF
 :buildLib
 mkdir build-lib
 pushd build-lib
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_LITE_LIB=ON ..
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_LITE_LIB=ON -DOCR_LITE_OPENMP=ON ..
 nmake
 popd
 GOTO:EOF
