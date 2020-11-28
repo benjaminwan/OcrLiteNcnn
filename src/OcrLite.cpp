@@ -81,18 +81,26 @@ OcrResult OcrLite::detect(const char *path, const char *imgName,
     }
 
     ScaleParam scale = getScaleParam(src, resize);
-
-    OcrResult result = detect(path, imgName, src, originRect, scale,
+    OcrResult result;
+    result = detect(path, imgName, src, originRect, scale,
                               boxScoreThresh, boxThresh, minArea, unClipRatio, doAngle, mostAngle);
 
     /*double startTest = getCurrentTime();
-    for (int i = 0; i < 500; ++i) {
-        detect(path, imgName, src, originRect, scale,
-               boxScoreThresh, boxThresh, minArea, scaleWidth,
-               scaleHeight);
+    std::vector<OcrResult> results;
+    int loopCount = 10;
+    for (int i = 0; i < loopCount; ++i) {
+        result = detect(path, imgName, src, originRect, scale,
+                        boxScoreThresh, boxThresh, minArea, unClipRatio, doAngle, mostAngle);
+        results.emplace_back(result);
     }
     double endTest = getCurrentTime();
-    printf("time=%f\n", (endTest - startTest) / 500);*/
+    printf("average time=%f\n", (endTest - startTest) / loopCount);
+    std::string result0 = results[0].strRes;//check result
+    int check = 0;
+    for (int i = 1; i < results.size(); ++i) {
+        check += result0.compare(results[i].strRes);
+    }
+    printf("check=%d\n", check);*/
 
     return result;
 }
