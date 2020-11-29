@@ -6,7 +6,7 @@
 ##### MacOS
 mkdir -p build-mac
 pushd build-mac
-cmake -DNCNN_OPENMP=ON \
+cmake -DCMAKE_BUILD_TYPE=Release -DNCNN_OPENMP=ON \
       -DOpenMP_C_FLAGS="-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include" \
       -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include" \
       -DOpenMP_CXX_LIB_NAMES="omp" \
