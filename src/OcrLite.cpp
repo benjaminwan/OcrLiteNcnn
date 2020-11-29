@@ -1,5 +1,6 @@
 #include "OcrLite.h"
 #include "OcrUtils.h"
+#include <stdarg.h> //windows&linux
 
 OcrLite::OcrLite(int numOfThread) {
     numThread = numOfThread;
