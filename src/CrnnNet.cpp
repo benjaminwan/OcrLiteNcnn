@@ -2,8 +2,6 @@
 #include "OcrUtils.h"
 #include <fstream>
 #include <numeric>
-#include <map>
-#include <omp.h>
 
 CrnnNet::~CrnnNet() {
     net.clear();
@@ -118,12 +116,12 @@ TextLine CrnnNet::getTextLine(cv::Mat &src) {
 }
 
 std::vector<TextLine> CrnnNet::getTextLines(std::vector<cv::Mat> &partImg, const char *path, const char *imgName) {
-    std::vector<TextLine> textLines;
-    std::map<int, TextLine> textLineMap;
+    int size = partImg.size();
+    std::vector<TextLine> textLines(size);
 #ifdef __OPENMP__
 #pragma omp parallel for num_threads(numThread)
 #endif
-    for (int i = 0; i < partImg.size(); ++i) {
+    for (int i = 0; i < size; ++i) {
         //OutPut DebugImg
         if (isOutputDebugImg) {
             std::string debugImgFile = getDebugImgFilePath(path, imgName, i, "-debug-");
@@ -138,11 +136,8 @@ std::vector<TextLine> CrnnNet::getTextLines(std::vector<cv::Mat> &partImg, const
 
         //Log textLine
         //Logger("textLine[%d](%s)", i, textLine.text.c_str());
-        //textLines.emplace_back(textLine);
-#ifdef __OPENMP__
-#pragma omp critical
-#endif
-        textLineMap[i] = textLine;
+        textLines[i] = textLine;
+
         /*std::ostringstream txtScores;
         for (int s = 0; s < textLine.charScores.size(); ++s) {
             if (s == 0) {
@@ -153,9 +148,6 @@ std::vector<TextLine> CrnnNet::getTextLines(std::vector<cv::Mat> &partImg, const
         }*/
         //Logger("textScores[%d]{%s}\n", i, string(txtScores.str()).c_str());
         //Logger("crnnTime[%d](%fms)\n", i, textLine.time);
-    }
-    for (std::map<int, TextLine>::iterator it = textLineMap.begin(); it != textLineMap.end(); it++) {
-        textLines.emplace_back(it->second);
     }
     return textLines;
 }
