@@ -35,50 +35,36 @@ OcrLiteOnnxToNcnn/models
 ```
 OcrLiteOnnxToNcnn/ncnn
 ├── include
-│   └── ncnn
-│       ├── allocator.h
-│       ├── benchmark.h
-│       ├── blob.h
-│       ├── c_api.h
-│       ├── command.h
-│       ├── cpu.h
-│       ├── datareader.h
-│       ├── gpu.h
-│       ├── layer.h
-│       ├── layer_shader_type.h
-│       ├── layer_shader_type_enum.h
-│       ├── layer_type.h
-│       ├── layer_type_enum.h
-│       ├── mat.h
-│       ├── modelbin.h
-│       ├── net.h
-│       ├── opencv.h
-│       ├── option.h
-│       ├── paramdict.h
-│       ├── pipeline.h
-│       ├── pipelinecache.h
-│       ├── platform.h
-│       └── simplestl.h
+│   └── ncnn
+│       ├── allocator.h
+│       ├── benchmark.h
+│       ├── blob.h
+│       ├── c_api.h
+│       ├── command.h
+│       ├── cpu.h
+│       ├── datareader.h
+│       ├── gpu.h
+│       ├── layer.h
+│       ├── layer_shader_type.h
+│       ├── layer_shader_type_enum.h
+│       ├── layer_type.h
+│       ├── layer_type_enum.h
+│       ├── mat.h
+│       ├── modelbin.h
+│       ├── net.h
+│       ├── opencv.h
+│       ├── option.h
+│       ├── paramdict.h
+│       ├── pipeline.h
+│       ├── pipelinecache.h
+│       ├── platform.h
+│       └── simplestl.h
 ├── linux
-│   ├── cmake
-│   │   └── ncnn
-│   │       ├── ncnn-release.cmake
-│   │       ├── ncnn.cmake
-│   │       └── ncnnConfig.cmake
-│   └── libncnn.a
+│   └── libncnn.a
 ├── macos
-│   ├── cmake
-│   │   └── ncnn
-│   │       ├── ncnn-release.cmake
-│   │       ├── ncnn.cmake
-│   │       └── ncnnConfig.cmake
-│   └── libncnn.a
+│   └── libncnn.a
+├── ncnnConfig.cmake
 └── windows
-    ├── cmake
-    │   └── ncnn
-    │       ├── ncnn-release.cmake
-    │       ├── ncnn.cmake
-    │       └── ncnnConfig.cmake
     └── ncnn.lib
 ```
 **注意：如果你要使用此处下载的预编译库，请选择VS2019来编译。如果你打算自己编译，则可以选择低版本VS**
@@ -160,6 +146,7 @@ brew ln opencv3 --force
 * getTextLineTime(文字识别耗时)、
 * TextBoxTime(方向识别+文字识别耗时)
 * FullDetectTime（整张图片总耗时）
+
 #### 输入参数说明
 * 请参考main.h中的命令行参数说明。
 * 每个参数有一个短参数名和一个长参数名，用短的或长的均可。
@@ -175,4 +162,30 @@ brew ln opencv3 --force
 10. ```-a或--noAngle```：启用(1)/禁用(0) 文字方向检测，只有图片倒置的情况下(旋转90~270度的图片)，才需要启用文字方向检测。
 11. ```-A或--mostAngle```：启用(1)/禁用(0) 角度投票(整张图片以最大可能文字方向来识别)，当禁用文字方向检测时，此项也不起作用。
 12. ```-?或--help```：打印命令行帮助。
+
+#### 编译参数说明
+build.sh目前有2个编译参数
+1. ```OCR_LITE_OPENMP=ON```：启用(ON)或禁用(OFF) AngleNet和CrnnNet阶段使用OpenMP并行运算。
+* 测试硬件：NUC8I7HVK冥王峡谷(i7-8809G) 32GRAM 2TSSD
+* 测试条件：不计算模型加载、框架初始化、加载图片的时间，线程数设置为当前CPU逻辑核心数量，跑100次计算平均耗时。
+* 经过测试，dbNet阶段使用OpenMP不能减少耗时
+* 所以此选项仅影响angelNet和crnnNet阶段的代码
+* 因为ncnn的crnn阶段因算子不支持而采用了外循环，所以在外循环使用OpenMP后，效果显著
+* 为了对比测试，选取了一张640x640的普通图片和一张分辨率为810*12119长图进行测试。
+* 第一个表格为普通图的测试结果，第二个图为长图的测试结果
+* 结论：启用OpenMP能快10%~30%(取决于图片文字数量)
+
+| 平台    | 系统版本  | 单线程 | OpenMP | 耗时倍率 |
+| ------- | ------- | ----: | ----: | ----: |
+| macOS   | 10.15.7 | 254ms | 227ms | 1.12 |
+| Windows | 10 x64  | 334ms | 308ms | 1.08 |
+
+| 平台    | 系统版本  | 单线程 | OpenMP | 耗时倍率 |
+| ------- | ------- | ----: | ----: | ----: |
+| macOS   | 10.15.7 | 8427ms | 6055ms | 1.39 |
+| Windows | 10 x64  | 12379ms | 9621ms | 1.28 |
+
+
+
+2. ```OCR_LITE_LIB=ON```： 启用(ON)或禁用(OFF) 编译为jni lib
 
