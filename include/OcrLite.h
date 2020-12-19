@@ -19,6 +19,8 @@ public:
 
     void enableResultTxt(const char *path, const char *imgName);
 
+    void setGPUIndex(int gpuIndex);
+
     bool initModels(const char *path);
 
     void Logger(const char *format, ...);

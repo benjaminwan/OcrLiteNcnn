@@ -25,6 +25,20 @@ void OcrLite::enableResultTxt(const char *path, const char *imgName) {
     resultTxt = fopen(resultTxtPath.c_str(), "w");
 }
 
+void OcrLite::setGPUIndex(int gpuIndex) {
+    if (gpuIndex >= 0) {
+        auto gpuCount = ncnn::get_gpu_count();
+        if (gpuCount != 0) {
+            ncnn::GpuInfo gpuInfo = ncnn::get_gpu_info();
+            auto computeQueueCount = gpuInfo.compute_queue_count;
+            printf("This device has %d GPU, and support %d compute queue\n", gpuCount, computeQueueCount);
+            dbNet.setGPUIndex(gpuIndex);
+        } else {
+            printf("This device does not have a GPU\n");
+        }
+    }
+}
+
 bool OcrLite::initModels(const char *path) {
     Logger("=====Init Models=====\n");
     std::string pathStr = path;

@@ -15,6 +15,7 @@ static const struct option long_options[] = {
         {"unClipRatio",    required_argument, NULL, 'u'},
         {"doAngle",        required_argument, NULL, 'a'},
         {"mostAngle",      required_argument, NULL, 'A'},
+        {"GPU",            required_argument, NULL, 'G'},
         {"version",        no_argument,       NULL, 'v'},
         {"help",           no_argument,       NULL, '?'},
         {NULL,             no_argument,       NULL, 0}
@@ -35,8 +36,9 @@ const char *optionalMsg = "-t --numThread: value of numThread(int), default: 4\n
                           "-o --boxThresh: value of boxThresh(float), default: 0.3\n" \
                           "-m --minArea: value of minArea(float), default: 3.0\n" \
                           "-u --unClipRatio: value of unClipRatio(float), default: 2.0\n" \
-                          "-a --doAngle: Enable(1)/Disable(0) Angle Net, default: Enable\n" \
-                          "-A --mostAngle: Enable(1)/Disable(0) Most Possible AngleIndex, default: Enable\n\n";
+                          "-a --doAngle: Disable(0)/Enable(1) Angle Net, default: Enable\n" \
+                          "-A --mostAngle: Disable(0)/Enable(1) Most Possible AngleIndex, default: Enable\n\n" \
+                          "-G --GPU: Disable(-1)/GPU0(0)/GPU1(1)/... Use Vulkan GPU accelerate, default: Disable(-1)\n\n";
 
 const char *otherMsg = "-v --version: show version\n" \
                        "-? --help: print this help\n\n";
