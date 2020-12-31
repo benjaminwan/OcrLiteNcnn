@@ -41,9 +41,9 @@ else if %flag% == 2 (set BUILD_OPENMP=OFF)^
 else (echo 输入错误！Input Error!)
 echo.
 
-echo "请选择要使用的Opencv库选项并回车: 1)Static静态库，2)Shared动态库"
 echo "使用静态库时，编译出来的可执行文件较大，但部署起来比较方便。"
 echo "使用动态库时，编译出来的可执行文件较小，但部署的时候记得把dll复制到可执行文件目录"
+echo "请选择要使用的OnnxRuntime和Opencv库选项并回车: 1)Static静态库，2)Shared动态库"
 set BUILD_STATIC=ON
 set /p flag=
 if %flag% == 1 (set BUILD_STATIC=ON)^
@@ -59,7 +59,7 @@ else if %flag% == 2 (set BUILD_NCNN_VULKAN=ON)^
 else (echo "输入错误！Input Error!")
 echo.
 
-echo "请注意：如果选择2)编译为JNI动态库时，如果要编译成x86可执行文件则必须安装x86版JDK，反之要编译成x64可执行文件则必须安装x64版JDK"
+echo "请注意：如果选择2)编译为JNI动态库时，必须安装配置Oracle JDK"
 echo "请选择编译输出类型并回车: 1)编译成可执行文件，2)编译成JNI动态库"
 set BUILD_LIB=OFF
 set /p flag=
