@@ -21,6 +21,9 @@ pushd "build-windows-%~1"
 cmake -G "NMake Makefiles" ^
   -DCMAKE_BUILD_TYPE="%~1" ^
   -DNCNN_OPENMP=ON ^
+  -DNCNN_BUILD_BENCHMARK=OFF ^
+  -DNCNN_BUILD_EXAMPLES=OFF ^
+  -DNCNN_BUILD_TOOLS=OFF ^
   -DNCNN_VULKAN=OFF ^
   ..
 nmake

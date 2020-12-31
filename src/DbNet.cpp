@@ -2,6 +2,7 @@
 #include "OcrUtils.h"
 
 void DbNet::setGpuIndex(int gpuIndex) {
+#ifdef __VULKAN__
     if (gpuIndex >= 0) {
         net.opt.use_vulkan_compute = true;
         net.set_vulkan_device(gpuIndex);
@@ -9,6 +10,7 @@ void DbNet::setGpuIndex(int gpuIndex) {
     } else {
         printf("dbNet use Cpu\n");
     }
+#endif
 }
 
 DbNet::~DbNet() {
