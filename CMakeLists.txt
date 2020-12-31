@@ -5,10 +5,12 @@ option(OCR_LITE_STATIC "Use Static Librarys For Build" ON)
 option(OCR_LITE_LIB "OcrLite Jni Support" OFF)
 option(OCR_LITE_OPENMP "OcrLite Enable OpenMP" ON)
 option(OCR_LITE_VULKAN "OcrLite Enable Vulkan" ON)
+option(OCR_BENCHMARK "build benchmark" ON)
 
 #set(OCR_LITE_LIB ON)
 #set(OCR_LITE_STATIC OFF)
 #set(OCR_LITE_VULKAN ON)
+set(OCR_BENCHMARK ON)
 
 set(CMAKE_CXX_STANDARD 11)
 add_definitions(-DUNICODE -D_UNICODE)
@@ -111,7 +113,19 @@ if (OCR_LITE_LIB)
 else ()
     add_executable(OcrLiteOnnxToNcnn ${OCR_COMPILE_CODE})
     target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${Vulkan_LIBRARY})
-    # benchmark
+
+endif ()
+
+if (OCR_LITE_OPENMP)
+    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __OPENMP__)
+endif ()
+
+if (OCR_LITE_VULKAN)
+    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __VULKAN__)
+endif ()
+
+# benchmark
+if (OCR_BENCHMARK AND NOT OCR_LITE_LIB)
     add_executable(benchmark benchmark/benchmark.cpp
             src/AngleNet.cpp
             src/clipper.cpp
@@ -121,14 +135,11 @@ else ()
             src/OcrLite.cpp
             src/OcrUtils.cpp)
     target_link_libraries(benchmark ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${Vulkan_LIBRARY})
-endif ()
+    if (OCR_LITE_OPENMP)
+        target_compile_definitions(benchmark PRIVATE __OPENMP__)
+    endif ()
 
-if (OCR_LITE_OPENMP)
-    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __OPENMP__)
-    target_compile_definitions(benchmark PRIVATE __OPENMP__)
-endif ()
-
-if (OCR_LITE_VULKAN)
-    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __VULKAN__)
-    target_compile_definitions(benchmark PRIVATE __VULKAN__)
+    if (OCR_LITE_VULKAN)
+        target_compile_definitions(benchmark PRIVATE __VULKAN__)
+    endif ()
 endif ()
