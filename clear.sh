@@ -6,5 +6,5 @@ rm -f CMake*.*
 rm -f OcrLiteOnnxToNcnn
 rm -f Makefile
 rm -f -r CMakeFiles
-
+rm -f benchmark
 popd

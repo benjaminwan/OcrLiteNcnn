@@ -10,7 +10,7 @@ public:
 
     ~CrnnNet();
 
-    void setNumOfThreads(int numOfThread);
+    void setNumThread(int numOfThread);
 
     bool initModel(std::string &pathStr);
 

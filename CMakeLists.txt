@@ -1,19 +1,24 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 project(OcrLiteOnnxToNcnn)
 
+option(OCR_LITE_STATIC "Use Static Librarys For Build" ON)
 option(OCR_LITE_LIB "OcrLite Jni Support" OFF)
 option(OCR_LITE_OPENMP "OcrLite Enable OpenMP" ON)
+option(OCR_LITE_VULKAN "OcrLite Enable Vulkan" ON)
 
 #set(OCR_LITE_LIB ON)
-if (APPLE)
-    set(CMAKE_MACOSX_RPATH ON)
+#set(OCR_LITE_STATIC OFF)
+#set(OCR_LITE_VULKAN ON)
+
+set(CMAKE_CXX_STANDARD 11)
+add_definitions(-DUNICODE -D_UNICODE)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_definitions("-Wall -g -O0")
+else ()
+    add_definitions("-Wall")
 endif ()
 
-add_definitions(-std=c++11)
-add_definitions("-Wall")
-add_definitions(-DUNICODE -D_UNICODE)
-
-#OpenMP flags for MACOS
+# OpenMP flags for MACOS
 if (APPLE)
     if (CMAKE_C_COMPILER_ID MATCHES "Clang")
         set(OpenMP_C "${CMAKE_C_COMPILER}")
@@ -30,7 +35,7 @@ if (APPLE)
     link_directories("/usr/local/opt/libomp/lib")
 endif ()
 
-#OpenMP
+# OpenMP
 find_package(OpenMP REQUIRED)
 if (OPENMP_FOUND)
     message("OPENMP FOUND")
@@ -41,23 +46,28 @@ else ()
     message(FATAL_ERROR "OpenMP Not Found!")
 endif ()
 
-#NCNN
-set(NCNN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ncnn")
-find_package(NCNN REQUIRED)
-if (NCNN_FOUND)
+# NCNN
+if (OCR_LITE_VULKAN)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/ncnn-vulkan-static/NcnnWrapperConfig.cmake)
+else ()
+    include(${CMAKE_CURRENT_SOURCE_DIR}/ncnn-static/NcnnWrapperConfig.cmake)
+endif ()
+find_package(ncnn REQUIRED)
+if (ncnn_FOUND)
     message(STATUS "NCNN_LIBS: ${NCNN_LIBS}")
     message(STATUS "NCNN_INCLUDE_DIRS: ${NCNN_INCLUDE_DIRS}")
-    message(STATUS "VULKAN_LIBS: ${VULKAN_LIBS}")
-    message(STATUS "VULKAN_INCLUDE_DIRS: ${VULKAN_INCLUDE_DIRS}")
-    include_directories(${VULKAN_INCLUDE_DIRS})
+    message(STATUS "Vulkan_LIBRARY: ${Vulkan_LIBRARY}")
+    message(STATUS "Vulkan_INCLUDE_DIR: ${Vulkan_INCLUDE_DIR}")
+    include_directories(${Vulkan_INCLUDE_DIR})
 else ()
     message(FATAL_ERROR "ncnn Not Found!")
-endif (NCNN_FOUND)
+endif (ncnn_FOUND)
 
-#OpenCV
-if (WIN32)
-    message("配置WINDOWS OpenCV 路径，请把opencv库放到${CMAKE_CURRENT_SOURCE_DIR}/opencv")
-    set(OpenCV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencv/build")
+# OpenCV
+if (OCR_LITE_STATIC)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/opencv-static/OpenCVWrapperConfig.cmake)
+else ()
+    include(${CMAKE_CURRENT_SOURCE_DIR}/opencv-shared/OpenCVWrapperConfig.cmake)
 endif ()
 find_package(OpenCV REQUIRED)
 if (OpenCV_FOUND)
@@ -67,7 +77,7 @@ else ()
     message(FATAL_ERROR "opencv Not Found!")
 endif (OpenCV_FOUND)
 
-#JNI
+# JNI
 if (OCR_LITE_LIB)
     find_package(JNI REQUIRED)
     if (JNI_FOUND)
@@ -80,22 +90,45 @@ if (OCR_LITE_LIB)
     endif ()
 endif ()
 
-#project include
+# project include
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-#source
+# source
 file(GLOB OCR_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 set(OCR_COMPILE_CODE ${OCR_SRC})
+
+# static libgcc libstdc++
+if (APPLE)
+    set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++")
+else ()
+    set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+endif ()
 
 if (OCR_LITE_LIB)
     add_library(OcrLiteOnnxToNcnn SHARED ${OCR_COMPILE_CODE})
     target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __JNI__)
-    target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${JNI_LIBS} ${OpenMP_CXX_LIB_NAMES})
+    target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${JNI_LIBS} ${OpenMP_CXX_LIB_NAMES}  ${Vulkan_LIBRARY})
 else ()
     add_executable(OcrLiteOnnxToNcnn ${OCR_COMPILE_CODE})
-    target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${VULKAN_LIBS})
+    target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${Vulkan_LIBRARY})
+    # benchmark
+    add_executable(benchmark benchmark/benchmark.cpp
+            src/AngleNet.cpp
+            src/clipper.cpp
+            src/CrnnNet.cpp
+            src/DbNet.cpp
+            src/getopt.cpp
+            src/OcrLite.cpp
+            src/OcrUtils.cpp)
+    target_link_libraries(benchmark ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${Vulkan_LIBRARY})
 endif ()
 
 if (OCR_LITE_OPENMP)
     target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __OPENMP__)
+    target_compile_definitions(benchmark PRIVATE __OPENMP__)
+endif ()
+
+if (OCR_LITE_VULKAN)
+    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __VULKAN__)
+    target_compile_definitions(benchmark PRIVATE __VULKAN__)
 endif ()

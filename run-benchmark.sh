@@ -17,9 +17,7 @@ set OMP_NUM_THREADS=$NUM_THREADS
 
 ##### run test on MacOS or Linux
 pushd build
-#export LD_LIBRARY_PATH="../vulkan-shared/linux:../vulkan-shared/macos"
-./OcrLiteOnnxToNcnn --models ../models --image ../../test_imgs/1.jpg \
---numThread $NUM_THREADS --padding 50 --imgResize 0 \
---boxScoreThresh 0.6 --boxThresh 0.3 --minArea 3 \
---unClipRatio 2.0 --doAngle 1 --mostAngle 1 -G 0
+#export LD_LIBRARY_PATH="../onnxruntime-shared/linux:../onnxruntime-shared/macos"
+./benchmark --models ../models --image ../../test_imgs/long1.jpg \
+--numThread $NUM_THREADS --loopCount 5 -G 0
 popd

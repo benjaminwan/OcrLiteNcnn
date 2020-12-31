@@ -3,6 +3,7 @@
 #include "version.h"
 #include "OcrLite.h"
 #include "main.h"
+#include "OcrUtils.h"
 
 void printHelp(FILE *out, const char *argv0) {
     fprintf(out, " ------- Usage -------\n");
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
     int flagDoAngle = 1;
     bool mostAngle = true;
     int flagMostAngle = 1;
-    int gpuIndex = -1;
+    int flagGpu = -1;
 
     int opt;
     int optionIndex = 0;
@@ -102,10 +103,11 @@ int main(int argc, char **argv) {
                 //printf("mostAngle=%d\n", mostAngle);
                 break;
             case 'G':
-                gpuIndex = (int) strtol(optarg, NULL, 10);
+                flagGpu = (int) strtol(optarg, NULL, 10);
                 break;
             case 'v':
                 printf("%s\n", VERSION);
+                printGpuInfo();
                 return 0;
             case '?':
                 printHelp(stdout, argv[0]);
@@ -115,19 +117,20 @@ int main(int argc, char **argv) {
         }
     }
 
-    OcrLite ocrLite(numThread);
+    OcrLite ocrLite;
+    ocrLite.setNumThread(numThread);
     ocrLite.initLogger(
             true,//isOutputConsole
             false,//isOutputPartImg
             true);//isOutputResultImg
 
     ocrLite.enableResultTxt(imgPath.c_str(), imgName.c_str());
-    ocrLite.setGPUIndex(gpuIndex);
+    ocrLite.setGpuIndex(flagGpu);
     ocrLite.Logger("=====Input Params=====\n");
     ocrLite.Logger(
             "numThread(%d),padding(%d),imgResize(%d),boxScoreThresh(%f),boxThresh(%f),minArea(%f),unClipRatio(%f),doAngle(%d),mostAngle(%d),GPU(%d)\n",
             numThread, padding, imgResize, boxScoreThresh, boxThresh, minArea, unClipRatio, doAngle, mostAngle,
-            gpuIndex);
+            flagGpu);
 
     bool ret = ocrLite.initModels(modelsDir.c_str());
     if (!ret) return -1;

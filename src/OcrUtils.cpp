@@ -2,6 +2,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include "OcrUtils.h"
 #include "clipper.hpp"
+#include "ncnn/net.h"
 
 double getCurrentTime() {
     return (static_cast<double>(cv::getTickCount())) / cv::getTickFrequency() * 1000;//单位毫秒
@@ -350,4 +351,21 @@ std::string getDebugImgFilePath(const char *path, const char *imgName, int i, co
     std::string filePath;
     filePath.append(path).append(imgName).append(tag).append(std::to_string(i)).append(".jpg");
     return filePath;
+}
+
+void printGpuInfo() {
+#ifdef __VULKAN__
+    auto gpuCount = ncnn::get_gpu_count();
+    if (gpuCount != 0) {
+        printf("This device has %d GPUs\n", gpuCount);
+        for (int i = 0; i < gpuCount; ++i) {
+            ncnn::GpuInfo gpuInfo = ncnn::get_gpu_info(i);
+            auto computeQueueCount = gpuInfo.compute_queue_count;
+            printf("GPU(%d) name(%s) queueCount(%u) vid(0x%x) pid(0x%x)\n", i, gpuInfo.device_name.c_str(),
+                   computeQueueCount, gpuInfo.vendor_id, gpuInfo.device_id);
+        }
+    } else {
+        printf("This device does not have a GPU\n");
+    }
+#endif
 }

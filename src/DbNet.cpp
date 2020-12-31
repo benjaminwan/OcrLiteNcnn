@@ -1,45 +1,21 @@
 #include "DbNet.h"
 #include "OcrUtils.h"
 
-void DbNet::setGPUIndex(int gpu_index) {
-    gpuIndex = gpu_index;
+void DbNet::setGpuIndex(int gpuIndex) {
     if (gpuIndex >= 0) {
-        vkdev = ncnn::get_gpu_device(gpuIndex);
-        if (vkdev == NULL) {
-            printf("vkdev NULL! There is no GPU(%d)! Try to use the default GPU\n", gpuIndex);
-            vkdev = ncnn::get_gpu_device();
-        }
-        if (vkdev != NULL) {
-            net.opt.use_vulkan_compute = true;
-            g_blob_vkallocator = new ncnn::VkBlobAllocator(vkdev);
-            g_staging_vkallocator = new ncnn::VkStagingAllocator(vkdev);
-            net.opt.blob_vkallocator = g_blob_vkallocator;
-            net.opt.workspace_vkallocator = g_blob_vkallocator;
-            net.opt.staging_vkallocator = g_staging_vkallocator;
-        } else {
-            fprintf(stderr, "vkdev NULL! GPU init failed! force to use CPU!\n");
-        }
+        net.opt.use_vulkan_compute = true;
+        net.set_vulkan_device(gpuIndex);
+        printf("dbNet try to use Gpu%d\n", gpuIndex);
     } else {
-        net.opt.use_vulkan_compute = false;
+        printf("dbNet use Cpu\n");
     }
 }
 
 DbNet::~DbNet() {
-    if (vkdev != NULL) {
-        delete vkdev;
-    }
-    if (g_blob_vkallocator != NULL) {
-        g_blob_vkallocator->clear();
-        delete g_blob_vkallocator;
-    }
-    if (g_staging_vkallocator != NULL) {
-        g_staging_vkallocator->clear();
-        delete g_staging_vkallocator;
-    }
     net.clear();
 }
 
-void DbNet::setNumOfThreads(int numOfThread) {
+void DbNet::setNumThread(int numOfThread) {
     numThread = numOfThread;
 }
 
@@ -54,23 +30,11 @@ bool DbNet::initModel(std::string &pathStr) {
     }
 }
 
-void DbNet::initVulkanCompute(){
-    if (net.opt.use_vulkan_compute){
-        if (g_blob_vkallocator != NULL) {
-            g_blob_vkallocator->clear();
-        }
-        if (g_staging_vkallocator != NULL) {
-            g_staging_vkallocator->clear();
-        }
-    }
-}
-
 std::vector<TextBox>
 DbNet::getTextBoxes(cv::Mat &src, ScaleParam &s,
                     float boxScoreThresh, float boxThresh, float minArea, float unClipRatio) {
     cv::Mat srcResize;
     resize(src, srcResize, cv::Size(s.dstWidth, s.dstHeight));
-    initVulkanCompute();
     ncnn::Mat input = ncnn::Mat::from_pixels(srcResize.data, ncnn::Mat::PIXEL_RGB,
                                              srcResize.cols, srcResize.rows);
 

@@ -2,14 +2,20 @@
 #include "OcrUtils.h"
 #include <stdarg.h> //windows&linux
 
-OcrLite::OcrLite(int numOfThread) {
-    numThread = numOfThread;
+OcrLite::OcrLite() {
+
 }
 
 OcrLite::~OcrLite() {
     if (isOutputResultTxt) {
         fclose(resultTxt);
     }
+}
+
+void OcrLite::setNumThread(int numOfThread) {
+    dbNet.setNumThread(numOfThread);
+    angleNet.setNumThread(numOfThread);
+    crnnNet.setNumThread(numOfThread);
 }
 
 void OcrLite::initLogger(bool isConsole, bool isPartImg, bool isResultImg) {
@@ -25,30 +31,18 @@ void OcrLite::enableResultTxt(const char *path, const char *imgName) {
     resultTxt = fopen(resultTxtPath.c_str(), "w");
 }
 
-void OcrLite::setGPUIndex(int gpuIndex) {
-    if (gpuIndex >= 0) {
-        auto gpuCount = ncnn::get_gpu_count();
-        if (gpuCount != 0) {
-            ncnn::GpuInfo gpuInfo = ncnn::get_gpu_info();
-            auto computeQueueCount = gpuInfo.compute_queue_count;
-            printf("This device has %d GPU, and support %d compute queue\n", gpuCount, computeQueueCount);
-            dbNet.setGPUIndex(gpuIndex);
-        } else {
-            printf("This device does not have a GPU\n");
-        }
-    }
+void OcrLite::setGpuIndex(int gpuIndex) {
+    dbNet.setGpuIndex(gpuIndex);
 }
 
 bool OcrLite::initModels(const char *path) {
     Logger("=====Init Models=====\n");
     std::string pathStr = path;
-    dbNet.setNumOfThreads(numThread);
+
     bool retDbNet = dbNet.initModel(pathStr);
 
-    angleNet.setNumOfThreads(numThread);
     bool retAngleNet = angleNet.initModel(pathStr);
 
-    crnnNet.setNumOfThreads(numThread);
     bool retCrnnNet = crnnNet.initModel(pathStr);
 
     if (!retDbNet || !retAngleNet || !retCrnnNet) {

@@ -11,15 +11,17 @@
 
 class OcrLite {
 public:
-    OcrLite(int numOfThread);
+    OcrLite();
 
     ~OcrLite();
+
+    void setNumThread(int numOfThread);
 
     void initLogger(bool isConsole, bool isPartImg, bool isResultImg);
 
     void enableResultTxt(const char *path, const char *imgName);
 
-    void setGPUIndex(int gpuIndex);
+    void setGpuIndex(int gpuIndex);
 
     bool initModels(const char *path);
 
@@ -36,7 +38,6 @@ private:
     bool isOutputResultTxt = false;
     bool isOutputResultImg = false;
     FILE *resultTxt;
-    int numThread = 4;
     DbNet dbNet;
     AngleNet angleNet;
     CrnnNet crnnNet;
