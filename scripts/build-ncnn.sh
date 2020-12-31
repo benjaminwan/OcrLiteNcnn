@@ -10,7 +10,6 @@ function cmakeParamsMac(){
       -DOpenMP_CXX_LIB_NAMES="omp" \
       -DOpenMP_C_LIB_NAMES="omp" \
       -DOpenMP_omp_LIBRARY=/usr/local/opt/libomp/lib/libomp.dylib \
-      -DNCNN_STRING=ON \
       -DNCNN_BUILD_BENCHMARK=OFF \
       -DNCNN_BUILD_EXAMPLES=OFF \
       -DNCNN_BUILD_TOOLS=OFF \
@@ -26,7 +25,9 @@ function cmakeParamsLinux(){
   pushd "build-linux-$1"
   cmake -DCMAKE_BUILD_TYPE=$1 -DCMAKE_CONFIGURATION_TYPES=$1 \
       -DNCNN_OPENMP=ON \
-      -DNCNN_STRING=OFF \
+      -DNCNN_BUILD_BENCHMARK=OFF \
+      -DNCNN_BUILD_EXAMPLES=OFF \
+      -DNCNN_BUILD_TOOLS=OFF \
       -DNCNN_VULKAN=OFF \
   ..
   make -j $NUM_THREADS
