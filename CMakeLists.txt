@@ -113,7 +113,6 @@ if (OCR_LITE_LIB)
 else ()
     add_executable(OcrLiteOnnxToNcnn ${OCR_COMPILE_CODE})
     target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${Vulkan_LIBRARY})
-
 endif ()
 
 if (OCR_LITE_OPENMP)
