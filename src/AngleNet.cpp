@@ -9,6 +9,7 @@ void AngleNet::setGpuIndex(int gpuIndex) {
         net.set_vulkan_device(gpuIndex);
         printf("AngleNet try to use Gpu%d\n", gpuIndex);
     } else {
+        net.opt.use_vulkan_compute = false;
         printf("AngleNet use Cpu\n");
     }
 #endif

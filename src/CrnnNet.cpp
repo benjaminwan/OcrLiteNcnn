@@ -10,6 +10,7 @@ void CrnnNet::setGpuIndex(int gpuIndex) {
         net.set_vulkan_device(gpuIndex);
         printf("CrnnNet try to use Gpu%d\n", gpuIndex);
     } else {
+        net.opt.use_vulkan_compute = false;
         printf("CrnnNet use Cpu\n");
     }
 #endif
