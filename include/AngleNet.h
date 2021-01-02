@@ -12,10 +12,12 @@ public:
 
     void setNumThread(int numOfThread);
 
+    void setGpuIndex(int gpuIndex);
+
     bool initModel(std::string &pathStr);
 
     std::vector<Angle> getAngles(std::vector<cv::Mat> &partImgs, const char *path,
-                            const char *imgName, bool doAngle, bool mostAngle);
+                                 const char *imgName, bool doAngle, bool mostAngle);
 
 private:
     bool isOutputAngleImg = false;

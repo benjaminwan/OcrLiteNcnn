@@ -2,6 +2,18 @@
 #include "OcrUtils.h"
 #include <numeric>
 
+void AngleNet::setGpuIndex(int gpuIndex) {
+#ifdef __VULKAN__
+    if (gpuIndex >= 0) {
+        net.opt.use_vulkan_compute = true;
+        net.set_vulkan_device(gpuIndex);
+        printf("AngleNet try to use Gpu%d\n", gpuIndex);
+    } else {
+        printf("AngleNet use Cpu\n");
+    }
+#endif
+}
+
 AngleNet::~AngleNet() {
     net.clear();
 }

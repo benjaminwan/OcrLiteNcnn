@@ -12,6 +12,8 @@ public:
 
     void setNumThread(int numOfThread);
 
+    void setGpuIndex(int gpuIndex);
+
     bool initModel(std::string &pathStr);
 
     std::vector<TextLine> getTextLines(std::vector<cv::Mat> &partImg, const char *path, const char *imgName);

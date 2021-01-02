@@ -3,6 +3,18 @@
 #include <fstream>
 #include <numeric>
 
+void CrnnNet::setGpuIndex(int gpuIndex) {
+#ifdef __VULKAN__
+    if (gpuIndex >= 0) {
+        net.opt.use_vulkan_compute = true;
+        net.set_vulkan_device(gpuIndex);
+        printf("CrnnNet try to use Gpu%d\n", gpuIndex);
+    } else {
+        printf("CrnnNet use Cpu\n");
+    }
+#endif
+}
+
 CrnnNet::~CrnnNet() {
     net.clear();
 }
