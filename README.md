@@ -16,7 +16,7 @@ ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理(DBNet+An
 
 ### 模型下载
 下载后，解压放到项目根目录，请勿修改文件夹名和文件名
-[模型下载地址](https://github.com/ouyanghuiyu/chineseocr_lite/tree/onnx/ncnn_project/models)
+[模型下载地址](https://github.com/ouyanghuiyu/chineseocr_lite/tree/onnx/models_ncnn)
 ```
 OcrLiteNcnn/models
 ├── angle_op.bin
