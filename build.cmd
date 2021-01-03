@@ -2,28 +2,10 @@
 chcp 65001
 cls
 @SETLOCAL
-echo "========第一步：请准备好编译环境========"
-echo "编译环境：VS2017或VS2019，安装时，至少选中'使用C++的桌面开发'"
-echo "开始菜单打开'x64 Native Tools Command Prompt for VS 2019'或'适用于 VS2017 的 x64 本机工具'，并转到OcrLiteOnnx根目录"
-echo "运行'build.cmd'"
+echo "========请先参考README.md准备好编译环境========"
 echo.
 
-echo "========第二步：准备opencv和ncnn========"
-echo "可以选择从源码自行编译，scripts文件夹内有参考编译脚本。或者从以下地址下载编译好的。"
-echo "https://gitee.com/benjaminwan/ocr-lite-ncnn/releases/v1.0"
-echo "OpenCv动态库：opencv-(版本号)-sharedLib.7z"
-echo "OpenCv静态库：opencv-(版本号)-staticLib.7z"
-echo "ncnn静态库含vulkan：ncnn-(版本号)-vulkan-staticLib.7z"
-echo "ncnn静态库：ncnn-(版本号)-staticLib.7z"
-echo "把压缩包解压到项目根目录"
-echo OcrLiteNcnn
-echo ├── ncnn-static
-echo ├── ncnn-vulkan-static
-echo ├── opencv-shared
-echo ├── opencv-static
-echo.
-
-echo "========第三步：选择编译选项========"
+echo "========选择编译选项========"
 echo "请注意：项目默认使用Release库，除非您自行编译Debug版的Onnxruntime和Opencv，否则请不要选择Debug编译"
 echo "请输入编译选项并回车: 1)Release, 2)Debug:""
 set BUILD_TYPE=Release

@@ -1,26 +1,8 @@
 #!/usr/bin/env bash
 
-echo "========第一步：请准备好编译环境========"
-echo "Linux编译工具链：sudo apt-get install build-essential cmake"
-echo "Linux编译工具版本：1)g++>=5, 2)cmake>=3.1, 3)jdk8(可选)"
-echo "macOS编译工具链：1)XCode, 2)brew install libomp"
-echo "macOs编译工具版本：1)XCode>=12, 2)cmake>=3.1, 3)jdk8(可选)"
+echo "========请先参考README.md准备好编译环境========"
 echo
-echo "========第二步：下载opencv和onnxruntime========"
-echo "可以选择从源码自行编译，scripts文件夹内有参考编译脚本。或者从以下地址下载编译好的。"
-echo "https://gitee.com/benjaminwan/ocr-lite-onnx-to-ncnn/releases/v1.0"
-echo "OpenCv动态库：opencv-(版本号)-sharedLib.7z"
-echo "OpenCv静态库：opencv-(版本号)-staticLib.7z"
-echo "ncnn静态库含vulkan：ncnn-(版本号)-vulkan-staticLib.7z"
-echo "ncnn静态库：ncnn-(版本号)-staticLib.7z"
-echo "把压缩包解压到项目根目录"
-echo "OcrLiteNcnn"
-echo "├── ncnn-static"
-echo "├── ncnn-vulkan-static"
-echo "├── opencv-shared"
-echo "├── opencv-static"
-echo
-echo "========第三步：选择编译选项========"
+echo "========选择编译选项========"
 echo "请选择编译选项并回车: 1)Release，2)Debug"
 read -p "" BUILD_TYPE
 if [ $BUILD_TYPE == 1 ]; then

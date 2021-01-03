@@ -28,8 +28,8 @@ OcrLiteNcnn/models
 └── keys.txt
 ```
 
-### 依赖的第三反库下载
-下载opencv和ncnn，[下载地址](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases/v1.0)
+### 依赖的第三方库下载
+1. 下载opencv和ncnn，[下载地址](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases/v1.0)
 * OpenCv动态库：opencv-(版本号)-sharedLib.7z
 * OpenCv静态库：opencv-(版本号)-staticLib.7z
 * ncnn静态库含vulkan：ncnn-(版本号)-vulkan-staticLib.7z
@@ -42,6 +42,16 @@ OcrLiteNcnn
     ├── opencv-shared
     ├── opencv-static
 ```
+2. Vulkan SDK，[下载地址](https://vulkan.lunarg.com/sdk/home)
+* 如果想编译ncnn带vulkan支持的版本，则必须先安装Vulkan SDK。
+* 一般下载最新版即可，当前最新版1.2.162.0
+* Windows：直接双击安装。
+* macOS：加载dmg后，终端执行```./install_vulkan.py```
+* Linux: 解压tar.gz文件后，把scripts文件夹里的install-vulkan-linux.sh复制到解压后的文件夹，并打开终端执行 
+```
+chmod a+x install-vulkan-linux.sh
+./install-vulkan-linux.sh
+```
 
 ### 编译环境
 1. Windows 10 x64
@@ -50,11 +60,11 @@ OcrLiteNcnn
 
 ### Windows编译说明
 #### Windows nmake编译
-1.  安装VS2017或VS2019，安装时，至少选中'使用C++的桌面开发'
-2.  cmake请自行下载&配置，[下载地址](https://cmake.org/download/)
-3.  开始菜单打开"x64 Native Tools Command Prompt for VS 2019"或"适用于 VS2017 的 x64 本机工具"，并转到本项目根目录
-4.  运行```build.cmd```并按照提示输入选项，最后选择'编译成可执行文件'
-5.  编译完成后运行```run-test.cmd```进行测试
+1. 安装VS2017或VS2019，安装时，至少选中'使用C++的桌面开发'
+2. cmake请自行下载&配置，[下载地址](https://cmake.org/download/)
+3. 开始菜单打开"x64 Native Tools Command Prompt for VS 2019"或"适用于 VS2017 的 x64 本机工具"，并转到本项目根目录
+4. 运行```build.cmd```并按照提示输入选项，最后选择'编译成可执行文件'
+5. 编译完成后运行```run-test.cmd```进行测试
 6. 编译JNI动态运行库(可选，可用于java调用)
 * 下载jdk-8u221-windows-x64.exe，安装选项默认(确保“源代码”项选中)，安装完成后，打开“系统”属性->高级->环境变量
 * 新建“系统变量”，变量名```JAVA_HOME``` ，变量值```C:\Program Files\Java\jdk1.8.0_221``
