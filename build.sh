@@ -2,7 +2,7 @@
 
 echo "========请先参考README.md准备好编译环境========"
 echo
-echo "========选择编译选项========"
+echo "========编译选项========"
 echo "请选择编译选项并回车: 1)Release，2)Debug"
 read -p "" BUILD_TYPE
 if [ $BUILD_TYPE == 1 ]; then
