@@ -10,7 +10,7 @@ echo.
 
 echo "========第二步：准备opencv和ncnn========"
 echo "可以选择从源码自行编译，scripts文件夹内有参考编译脚本。或者从以下地址下载编译好的。"
-echo "https://gitee.com/benjaminwan/ocr-lite-onnx-to-ncnn/releases/v1.0"
+echo "https://gitee.com/benjaminwan/ocr-lite-ncnn/releases/v1.0"
 echo "OpenCv动态库：opencv-(版本号)-sharedLib.7z"
 echo "OpenCv静态库：opencv-(版本号)-staticLib.7z"
 echo "ncnn静态库含vulkan：ncnn-(版本号)-vulkan-staticLib.7z"

@@ -18,5 +18,5 @@ valgrind --tool=memcheck --leak-check=full --leak-resolution=med --track-origins
 ./OcrLiteNcnn --models ../models --image ../../test_imgs/1.jpg \
 --numThread $NUM_THREADS --padding 50 --imgResize 0 \
 --boxScoreThresh 0.6 --boxThresh 0.3 --minArea 3 \
---unClipRatio 2.0 --doAngle 1 --mostAngle 0
+--unClipRatio 2.0 --doAngle 1 --mostAngle 1
 popd
