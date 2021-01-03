@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(OcrLiteOnnxToNcnn)
+project(OcrLiteNcnn)
 
 option(OCR_LITE_STATIC "Use Static Librarys For Build" ON)
 option(OCR_LITE_LIB "OcrLite Jni Support" OFF)
@@ -107,20 +107,20 @@ else ()
 endif ()
 
 if (OCR_LITE_LIB)
-    add_library(OcrLiteOnnxToNcnn SHARED ${OCR_COMPILE_CODE})
-    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __JNI__)
-    target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${JNI_LIBS} ${OpenMP_CXX_LIB_NAMES}  ${Vulkan_LIBRARY})
+    add_library(OcrLiteNcnn SHARED ${OCR_COMPILE_CODE})
+    target_compile_definitions(OcrLiteNcnn PRIVATE __JNI__)
+    target_link_libraries(OcrLiteNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${JNI_LIBS} ${OpenMP_CXX_LIB_NAMES}  ${Vulkan_LIBRARY})
 else ()
-    add_executable(OcrLiteOnnxToNcnn ${OCR_COMPILE_CODE})
-    target_link_libraries(OcrLiteOnnxToNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${Vulkan_LIBRARY})
+    add_executable(OcrLiteNcnn ${OCR_COMPILE_CODE})
+    target_link_libraries(OcrLiteNcnn ${NCNN_LIBS} ${OpenCV_LIBS} ${OpenMP_CXX_LIB_NAMES} ${Vulkan_LIBRARY})
 endif ()
 
 if (OCR_LITE_OPENMP)
-    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __OPENMP__)
+    target_compile_definitions(OcrLiteNcnn PRIVATE __OPENMP__)
 endif ()
 
 if (OCR_LITE_VULKAN)
-    target_compile_definitions(OcrLiteOnnxToNcnn PRIVATE __VULKAN__)
+    target_compile_definitions(OcrLiteNcnn PRIVATE __VULKAN__)
 endif ()
 
 # benchmark

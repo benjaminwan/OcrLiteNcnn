@@ -16,7 +16,7 @@ echo "OpenCv静态库：opencv-(版本号)-staticLib.7z"
 echo "ncnn静态库含vulkan：ncnn-(版本号)-vulkan-staticLib.7z"
 echo "ncnn静态库：ncnn-(版本号)-staticLib.7z"
 echo "把压缩包解压到项目根目录"
-echo OcrLiteOnnxToNcnn
+echo OcrLiteNcnn
 echo ├── ncnn-static
 echo ├── ncnn-vulkan-static
 echo ├── opencv-shared

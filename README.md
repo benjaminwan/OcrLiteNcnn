@@ -1,4 +1,4 @@
-# OcrLiteOnnxToNcnn
+# OcrLiteNcnn
 
 #### Demo下载(win、mac、linux)
 [Gitee下载](https://gitee.com/benjaminwan/ocr-lite-onnx-to-ncnn/releases)
@@ -19,7 +19,7 @@ DBNet(图像分割)+AngleNet(文字方向检测)+CRNN(文字识别)
 
 [模型下载地址](https://github.com/ouyanghuiyu/chineseocr_lite/tree/onnx/ncnn_project/models)
 ```
-OcrLiteOnnxToNcnn/models
+OcrLiteNcnn/models
 ├── angle_op.bin
 ├── angle_op.param
 ├── crnn_lite_op.bin
@@ -33,7 +33,7 @@ OcrLiteOnnxToNcnn/models
 1. cmake 3.18.4
 2. ncnn预编译库版本为 20200916 b766c8c，文件名:ncnn-pc-lib-20200916.zip，从顶部下载地址下载后，解压到项目根目录
 ```
-OcrLiteOnnxToNcnn/ncnn
+OcrLiteNcnn/ncnn
 ├── include
 │   └── ncnn
 │       ├── allocator.h
@@ -100,7 +100,7 @@ OcrLiteOnnx/opencv
 ##### Windows Visual Studio编译说明
 * VS2015/VS2017/VS2019，cmake，opencv……等安装配置参考上述步骤。
 * 运行generate-vs-project.cmd，输入数字选择要生成的visual studio项目解决方案版本。
-* 根据你的编译环境，进入build-xxxx-x86或x64文件夹，打开OcrLiteOnnxToNcnn.sln。
+* 根据你的编译环境，进入build-xxxx-x86或x64文件夹，打开OcrLiteNcnn.sln。
 * 在顶部工具栏选择Debug或Release，在右边的"解决方案"窗口，右键选中"ALL_BUILD"->生成。
 
 ##### Mac编译说明
