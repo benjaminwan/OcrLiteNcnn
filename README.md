@@ -147,3 +147,6 @@ build.sh目前有2个编译参数
 2. ```OCR_LITE_LIB=ON```： 启用(ON)或禁用(OFF) 编译为jni lib
 3. ```OCR_LITE_STATIC=ON```： 启用(ON)或禁用(OFF) ON时选择opencv静态库进行编译，OFF时则选择动态库编译
 4. ```OCR_LITE_VULKAN=ON```： 启用(ON)或禁用(OFF) ON时选择ncnn(带vulkan)静态库进行编译，OFF时则选择不带vulkan的版本编译
+
+### 编译脚本说明
+* scripts文件夹内有一些脚本，用于自行编译ncnn，另有编译opencv的脚本，请到OcrLiteOnn项目内寻找。
