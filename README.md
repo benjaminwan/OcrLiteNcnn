@@ -103,12 +103,13 @@ opencv或onnxruntime使用动态库时，参考下列方法：
 ### Linux编译说明
 1. Ubuntu16.04 LTS 或其它发行版
 2. ```sudo apt-get install build-essential```
-3. g++版本要求5以上，cmake 3.1要求以上[下载地址](https://cmake.org/download/)
+3. g++版本要求>=5，cmake 3.1要求以上[下载地址](https://cmake.org/download/)
 4. 终端打开项目根目录，```./build.sh```并按照提示输入选项，最后选择'编译成可执行文件'
 5. 测试：```./run-test.sh```
 6. 编译JNI动态运行库(可选，可用于java调用)
 * 下载jdk-8u221并安装配置
 * 运行```build.sh```并按照提示输入选项，最后选择'编译成JNI动态库'
+* **注意：编译JNI时，g++版本要求>=6**
 
 #### Linux部署说明
 opencv或onnxruntime使用动态库时，参考下列方法：
@@ -159,7 +160,7 @@ build.sh目前有2个编译参数
 4. ```OCR_LITE_VULKAN=ON```： 启用(ON)或禁用(OFF) ON时选择ncnn(带vulkan)静态库进行编译，OFF时则选择不带vulkan的版本编译
 
 ### 编译脚本说明
-* scripts文件夹内有一些脚本，用于自行编译ncnn，另有编译opencv的脚本，请到OcrLiteOnn项目内寻找。
+* scripts文件夹内有一些脚本，用于自行编译ncnn，另有编译opencv的脚本，请到OcrLiteOnnx项目内寻找。
 
 ### 关于内存泄漏与valgrind
 * 项目根目录的valgrind-memcheck.sh用来检查内存泄漏(需要debug编译)。
