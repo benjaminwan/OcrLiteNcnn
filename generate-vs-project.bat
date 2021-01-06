@@ -2,7 +2,8 @@
 chcp 65001
 cls
 @SETLOCAL
-
+echo "========请先参考README.md准备好编译环境========"
+echo.
 echo "请注意：项目默认使用Release库，除非您自行编译Debug版的Onnxruntime和Opencv，否则请不要选择Debug编译"
 echo "请输入编译选项并回车: 1)Release, 2)Debug:""
 set BUILD_TYPE=Release
