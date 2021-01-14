@@ -1,7 +1,12 @@
 # OcrLiteNcnn
 
+### Project下载
+* 有整合好源码和依赖库的完整工程项目，文件比较大，可到Q群共享内下载，找以Project开头的压缩包文件
+* 如果想自己折腾，则请继续阅读本说明
+
 ### Demo下载(win、mac、linux)
-[Gitee下载](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases)
+编译好的demo文件可以到Q群共享内下载
+或者[Gitee下载](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases)
 
 ### 介绍
 ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理(DBNet+AngleNet+CRNN)
@@ -15,17 +20,17 @@ ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理(DBNet+An
 采用ncnn神经网络前向计算框架[https://github.com/Tencent/ncnn](https://github.com/Tencent/ncnn)
 
 ### 模型下载
-下载后，解压放到项目根目录，请勿修改文件夹名和文件名
 [模型下载地址](https://github.com/ouyanghuiyu/chineseocr_lite/tree/onnx/models_ncnn)
+下载后解压到项目根目录
 ```
 OcrLiteNcnn/models
-├── angle_op.bin
-├── angle_op.param
-├── crnn_lite_op.bin
-├── crnn_lite_op.param
-├── dbnet_op.bin
-├── dbnet_op.param
-└── keys.txt
+    ├── angle_op.bin
+    ├── angle_op.param
+    ├── crnn_lite_op.bin
+    ├── crnn_lite_op.param
+    ├── dbnet_op.bin
+    ├── dbnet_op.param
+    └── keys.txt
 ```
 
 ### 依赖的第三方库下载
@@ -64,7 +69,7 @@ chmod a+x install-vulkan-linux.sh
 2. cmake请自行下载&配置，[下载地址](https://cmake.org/download/)
 3. 开始菜单打开"x64 Native Tools Command Prompt for VS 2019"或"适用于 VS2017 的 x64 本机工具"，并转到本项目根目录
 4. 运行```build.bat```并按照提示输入选项，最后选择'编译成可执行文件'
-5. 编译完成后运行```run-test.bat```进行测试
+5. 编译完成后运行```run-test.bat```进行测试(注意修改脚本内的目标图片路径)
 6. 编译JNI动态运行库(可选，可用于java调用)
 * 下载jdk-8u221-windows-x64.exe，安装选项默认(确保“源代码”项选中)，安装完成后，打开“系统”属性->高级->环境变量
 * 新建“系统变量”，变量名```JAVA_HOME``` ，变量值```C:\Program Files\Java\jdk1.8.0_221``
@@ -89,7 +94,7 @@ chmod a+x install-vulkan-linux.sh
 2. 自行下载安装HomeBrew，cmake >=3.1[下载地址](https://cmake.org/download/)
 3. libomp: ```brew install libomp```
 4. 终端打开项目根目录，```./build.sh```并按照提示输入选项，最后选择'编译成可执行文件'
-5. 测试：```./run-test.sh```
+5. 测试：```./run-test.sh```(注意修改脚本内的目标图片路径)
 6. 编译JNI动态运行库(可选，可用于java调用)
 * 下载jdk-8u221-macosx-x64.dmg，安装。
 * 编辑用户目录下的隐藏文件```.zshrc``` ，添加```export JAVA_HOME=$(/usr/libexec/java_home)```
@@ -105,7 +110,7 @@ opencv或onnxruntime使用动态库时，参考下列方法：
 2. ```sudo apt-get install build-essential```
 3. g++>=5，cmake>=3.1[下载地址](https://cmake.org/download/)
 4. 终端打开项目根目录，```./build.sh```并按照提示输入选项，最后选择'编译成可执行文件'
-5. 测试：```./run-test.sh```
+5. 测试：```./run-test.sh```(注意修改脚本内的目标图片路径)
 6. 编译JNI动态运行库(可选，可用于java调用)
 * 下载jdk-8u221并安装配置
 * 运行```build.sh```并按照提示输入选项，最后选择'编译成JNI动态库'
@@ -116,26 +121,9 @@ opencv或onnxruntime使用动态库时，参考下列方法：
 * 把动态库所在路径加入LD_LIBRARY_PATH搜索路径
 * 把动态库复制或链接到到/usr/lib
 
-### 输入参数说明
-* 请参考main.h中的命令行参数说明。
-* 每个参数有一个短参数名和一个长参数名，用短的或长的均可。
-1. ```-d或--models```：模型所在文件夹路径，可以相对路径也可以绝对路径。
-2. ```-i或--image```：目标图片路径，可以相对路径也可以绝对路径。
-3. ```-t或--numThread```：线程数量。
-4. ```-p或--padding```：图像预处理，用于提升识别率，文字框没有正确框住所有文字时，增加此值。
-5. ```-s或--imgResize```：按图像长边进行总体缩放，放大增加识别耗时但精度更高，缩小减小耗时但精度降低。
-6. ```-b或--boxScoreThresh```：文字框置信度门限，文字框没有正确框住所有文字时，减小此值。
-7. ```-o或--boxThresh```：请自行试验。
-8. ```-m或--minArea```：请自行试验。
-9. ```-u或--unClipRatio```：单个文字框大小倍率，越大时单个文字框越大。
-10. ```-a或--noAngle```：启用(1)/禁用(0) 文字方向检测，只有图片倒置的情况下(旋转90~270度的图片)，才需要启用文字方向检测。
-11. ```-A或--mostAngle```：启用(1)/禁用(0) 角度投票(整张图片以最大可能文字方向来识别)，当禁用文字方向检测时，此项也不起作用。
-12. ```-?或--help```：打印命令行帮助。
-13. ```-G或--GPU```：尝试使用gpu进行计算，-1(使用CPU)/0(使用GPU0)/1(使用GPU1)/...，GPU选择失败时，则使用CPU进行计算。
-
 ### 编译参数说明
 build.sh编译参数
-1. ```OCR_LITE_OPENMP=ON```：启用(ON)或禁用(OFF) AngleNet和CrnnNet阶段使用OpenMP并行运算。
+1. ```OCR_OPENMP=ON```：启用(ON)或禁用(OFF) AngleNet和CrnnNet阶段使用OpenMP并行运算。
 * 测试硬件：NUC8I7HVK冥王峡谷(i7-8809G) 32GRAM 2TSSD
 * 测试条件：不计算模型加载、框架初始化、加载图片的时间，线程数设置为当前CPU逻辑核心数量，跑100次计算平均耗时。
 * 经过测试，dbNet阶段使用OpenMP不能减少耗时
@@ -155,9 +143,30 @@ build.sh编译参数
 | macOS   | 10.15.7 | 8427ms | 6055ms | 1.39 |
 | Windows | 10 x64  | 12379ms | 9621ms | 1.28 |
 
-2. ```OCR_LITE_LIB=ON```： 启用(ON)或禁用(OFF) 编译为jni lib
-3. ```OCR_LITE_STATIC=ON```： 启用(ON)或禁用(OFF) ON时选择opencv静态库进行编译，OFF时则选择动态库编译
-4. ```OCR_LITE_VULKAN=ON```： 启用(ON)或禁用(OFF) ON时选择ncnn(带vulkan)静态库进行编译，OFF时则选择不带vulkan的版本编译
+2. ```OCR_LIB=ON```： 启用(ON)或禁用(OFF) ON时编译为jni lib，OFF时编译为可执行文件
+3. ```OCR_STATIC=ON```： 启用(ON)或禁用(OFF) ON时选择opencv静态库进行编译，OFF时则选择动态库编译
+4. ```OCR_VULKAN=ON```： 启用(ON)或禁用(OFF) ON时选择ncnn(带vulkan)静态库进行编译，OFF时则选择不带vulkan的版本编译
+
+### 输入参数说明
+* 请参考main.h中的命令行参数说明。
+* 每个参数有一个短参数名和一个长参数名，用短的或长的均可。
+1. ```-d或--models```：模型所在文件夹路径，可以相对路径也可以绝对路径。
+2. ```-1或--det```:det模型文件名
+3. ```-2或--cls```:cls模型文件名
+4. ```-3或--rec```:rec模型文件名
+5. ```-4或--keys```:keys.txt文件名
+6. ```-i或--image```：目标图片路径，可以相对路径也可以绝对路径。
+7. ```-t或--numThread```：线程数量。
+8. ```-p或--padding```：图像预处理，在图片外周添加白边，用于提升识别率，文字框没有正确框住所有文字时，增加此值。
+9. ```-s或--maxSideLen```：按图片最长边的长度，此值为0代表不缩放，例：1024，如果图片长边大于1024则把图像整体缩小到1024再进行图像分割计算，如果图片长边小于1024则不缩放，如果图片长边小于32，则缩放到32。
+10. ```-b或--boxScoreThresh```：文字框置信度门限，文字框没有正确框住所有文字时，减小此值。
+11. ```-o或--boxThresh```：请自行试验。
+12. ```-u或--unClipRatio```：单个文字框大小倍率，越大时单个文字框越大。此项与图片的大小相关，越大的图片此值应该越大。
+13. ```-a或--noAngle```：启用(1)/禁用(0) 文字方向检测，只有图片倒置的情况下(旋转90~270度的图片)，才需要启用文字方向检测。
+14. ```-A或--mostAngle```：启用(1)/禁用(0) 角度投票(整张图片以最大可能文字方向来识别)，当禁用文字方向检测时，此项也不起作用。
+15. ```-h或--help```：打印命令行帮助。
+16. ```-G或--GPU```：尝试使用gpu进行计算，-1(使用CPU)/0(使用GPU0)/1(使用GPU1)/...，GPU选择失败时，则使用CPU进行计算。
+
 
 ### 编译脚本说明
 * scripts文件夹内有一些脚本，用于自行编译ncnn，另有编译opencv的脚本，请到OcrLiteOnnx项目内寻找。
