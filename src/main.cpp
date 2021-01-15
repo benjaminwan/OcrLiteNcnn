@@ -163,8 +163,8 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Model angle file not found: %s.bin\n", modelClsPath.c_str());
         return -1;
     }
-    bool hasModelRecFile = isFileExists(modelRecPath + ".param");
-    if (!hasModelRecFile) {
+    bool hasModelRecParam = isFileExists(modelRecPath + ".param");
+    if (!hasModelRecParam) {
         fprintf(stderr, "Model crnn file not found: %s.param\n", modelRecPath.c_str());
         return -1;
     }

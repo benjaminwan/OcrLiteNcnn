@@ -9,15 +9,15 @@
 static OcrLite *ocrLite;
 
 JNIEXPORT jint JNICALL
-JNI_OnLoad(JavaVM *vm, void *reserved){
+JNI_OnLoad(JavaVM *vm, void *reserved) {
     ocrLite = new OcrLite();
     return JNI_VERSION_1_4;
 }
 
 JNIEXPORT void JNICALL
-JNI_OnUnload(JavaVM *vm, void *reserved){
+JNI_OnUnload(JavaVM *vm, void *reserved) {
     //printf("JNI_OnUnload\n");
-	delete ocrLite;
+    delete ocrLite;
 }
 
 #ifdef _WIN32
@@ -95,31 +95,63 @@ Java_com_benjaminwan_ocrlibrary_OcrEngine_initModels(JNIEnv *env, jobject thiz, 
     std::string clsName = jstringToChar(env, cls);
     std::string recName = jstringToChar(env, rec);
     std::string keysName = jstringToChar(env, keys);
-    std::string modelDetPath = modelsDir + "/" + detName;
-    std::string modelClsPath = modelsDir + "/" + clsName;
-    std::string modelRecPath = modelsDir + "/" + recName;
-    std::string keysPath = modelsDir + "/" + keysName;
     printf("modelsDir=%s\ndet=%s\ncls=%s\nrec=%s\nkeys=%s\n", modelsDir.c_str(), detName.c_str(), clsName.c_str(),
            recName.c_str(), keysName.c_str());
-    bool hasModelDetFile = isFileExists(modelDetPath);
-    if (!hasModelDetFile) {
-        fprintf(stderr, "Model det file not found: %s\n", modelDetPath.c_str());
-        return false;
+    std::string modelDetPath, modelClsPath, modelRecPath, keysPath;
+    if (detName.empty()) {
+        modelDetPath = modelsDir + "/" + "dbnet_op";
+    } else {
+        modelDetPath = modelsDir + "/" + detName;
     }
-    bool hasModelClsFile = isFileExists(modelClsPath);
-    if (!hasModelClsFile) {
-        fprintf(stderr, "Model cls file not found: %s\n", modelClsPath.c_str());
-        return false;
+    if (clsName.empty()) {
+        modelClsPath = modelsDir + "/" + "angle_op";
+    } else {
+        modelClsPath = modelsDir + "/" + clsName;
     }
-    bool hasModelRecFile = isFileExists(modelRecPath);
-    if (!hasModelRecFile) {
-        fprintf(stderr, "Model rec file not found: %s\n", modelRecPath.c_str());
-        return false;
+    if (recName.empty()) {
+        modelRecPath = modelsDir + "/" + "crnn_lite_op";
+    } else {
+        modelRecPath = modelsDir + "/" + recName;
+    }
+    if (keysName.empty()) {
+        keysPath = modelsDir + "/" + "keys.txt";
+    } else {
+        keysPath = modelsDir + "/" + keysName;
+    }
+    bool hasModelDetParam = isFileExists(modelDetPath + ".param");
+    if (!hasModelDetParam) {
+        fprintf(stderr, "Model dbnet file not found: %s.param\n", modelDetPath.c_str());
+        return -1;
+    }
+    bool hasModelDetBin = isFileExists(modelDetPath + ".bin");
+    if (!hasModelDetBin) {
+        fprintf(stderr, "Model dbnet file not found: %s.bin\n", modelDetPath.c_str());
+        return -1;
+    }
+    bool hasModelClsParam = isFileExists(modelClsPath + ".param");
+    if (!hasModelClsParam) {
+        fprintf(stderr, "Model angle file not found: %s.param\n", modelClsPath.c_str());
+        return -1;
+    }
+    bool hasModelClsBin = isFileExists(modelClsPath + ".bin");
+    if (!hasModelClsBin) {
+        fprintf(stderr, "Model angle file not found: %s.bin\n", modelClsPath.c_str());
+        return -1;
+    }
+    bool hasModelRecParam = isFileExists(modelRecPath + ".param");
+    if (!hasModelRecParam) {
+        fprintf(stderr, "Model crnn file not found: %s.param\n", modelRecPath.c_str());
+        return -1;
+    }
+    bool hasModelRecBin = isFileExists(modelRecPath + ".bin");
+    if (!hasModelRecBin) {
+        fprintf(stderr, "Model crnn file not found: %s.bin\n", modelRecPath.c_str());
+        return -1;
     }
     bool hasKeysFile = isFileExists(keysPath);
     if (!hasKeysFile) {
         fprintf(stderr, "keys file not found: %s\n", keysPath.c_str());
-        return false;
+        return -1;
     }
     ocrLite->initModels(modelDetPath, modelClsPath, modelRecPath, keysPath);
     return true;
