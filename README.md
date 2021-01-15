@@ -9,7 +9,7 @@
 或者[Gitee下载](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases)
 
 ### 介绍
-ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理(DBNet+AngleNet+CRNN)
+ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理
 
 **对应chineseocr lite的onnx分支**
 
@@ -61,7 +61,8 @@ chmod a+x install-vulkan-linux.sh
 ### 编译环境
 1. Windows 10 x64
 2. macOS 10.15
-3. Linux Ubuntu 1604
+3. Linux Ubuntu 1604 x64
+**注意：以下说明仅适用于本机编译。如果需要交叉编译为arm等其它平台(参考android)，则需要先交叉编译所有第三方依赖库(ncnn、opencv)，然后再把依赖库整合替换到本项目里。**
 
 ### Windows编译说明
 #### Windows nmake编译
@@ -151,10 +152,10 @@ build.sh编译参数
 * 请参考main.h中的命令行参数说明。
 * 每个参数有一个短参数名和一个长参数名，用短的或长的均可。
 1. ```-d或--models```：模型所在文件夹路径，可以相对路径也可以绝对路径。
-2. ```-1或--det```:det模型文件名
-3. ```-2或--cls```:cls模型文件名
-4. ```-3或--rec```:rec模型文件名
-5. ```-4或--keys```:keys.txt文件名
+2. ```-1或--det```:dbNet模型文件名(不含扩展名)
+3. ```-2或--cls```:angleNet模型文件名(不含扩展名)
+4. ```-3或--rec```:crnnNet模型文件名(不含扩展名)
+5. ```-4或--keys```:keys.txt文件名(含扩展名)
 6. ```-i或--image```：目标图片路径，可以相对路径也可以绝对路径。
 7. ```-t或--numThread```：线程数量。
 8. ```-p或--padding```：图像预处理，在图片外周添加白边，用于提升识别率，文字框没有正确框住所有文字时，增加此值。
@@ -162,7 +163,7 @@ build.sh编译参数
 10. ```-b或--boxScoreThresh```：文字框置信度门限，文字框没有正确框住所有文字时，减小此值。
 11. ```-o或--boxThresh```：请自行试验。
 12. ```-u或--unClipRatio```：单个文字框大小倍率，越大时单个文字框越大。此项与图片的大小相关，越大的图片此值应该越大。
-13. ```-a或--noAngle```：启用(1)/禁用(0) 文字方向检测，只有图片倒置的情况下(旋转90~270度的图片)，才需要启用文字方向检测。
+13. ```-a或--doAngle```：启用(1)/禁用(0) 文字方向检测，只有图片倒置的情况下(旋转90~270度的图片)，才需要启用文字方向检测。
 14. ```-A或--mostAngle```：启用(1)/禁用(0) 角度投票(整张图片以最大可能文字方向来识别)，当禁用文字方向检测时，此项也不起作用。
 15. ```-h或--help```：打印命令行帮助。
 16. ```-G或--GPU```：尝试使用gpu进行计算，-1(使用CPU)/0(使用GPU0)/1(使用GPU1)/...，GPU选择失败时，则使用CPU进行计算。
@@ -173,5 +174,5 @@ build.sh编译参数
 
 ### 关于内存泄漏与valgrind
 * 项目根目录的valgrind-memcheck.sh用来检查内存泄漏(需要debug编译)。
-* valgrind-memcheck.txt是当前demo在linux平台的检查报告。
-* 报告中"possibly lost"有23个，均发生在第三方库，possibly lost可能不一定是泄露，暂时不管。
+* valgrind-memcheck.txt是demo在linux平台的检查报告。
+* 报告中的"possibly lost"均发生在第三方库，possibly lost可能不一定是泄露，暂时不管。
