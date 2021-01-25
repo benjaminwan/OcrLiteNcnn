@@ -104,7 +104,6 @@ TextLine CrnnNet::getTextLine(const cv::Mat &src) {
     //ncnn lstm
     ncnn::Mat out;
     extractor.extract("out", out);
-    printf("out h=%d, w=%d, c=%d\n", out.h, out.w, out.c);
     float *floatArray = (float *) out.data;
     std::vector<float> outputData(floatArray, floatArray + out.h * out.w);
     return scoreToTextLine(outputData, out.h, out.w);
