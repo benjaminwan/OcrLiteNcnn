@@ -40,6 +40,7 @@ OcrLiteNcnn/models
 * ncnn静态库含vulkan：ncnn-(版本号)-vulkan-staticLib.7z
 * ncnn静态库：ncnn-(版本号)-staticLib.7z
 * 把压缩包解压到项目根目录，解压后目录结构
+* 注意：ncnn v20210124开始，支持lstm。本demo从v1.5.1开始，crnn改用lstm，请注意选择ncnn版本。
 ```
 OcrLiteNcnn
     ├── ncnn-static
