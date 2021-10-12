@@ -146,3 +146,4 @@ ncnn-static/
 ncnn-vulkan-static/
 opencv-shared/
 opencv-static/
+/images/*-result.*
