@@ -15,14 +15,6 @@ else if %flag% == 2 (set BUILD_TYPE=Debug)^
 else (echo 输入错误！Input Error!)
 echo.
 
-echo "请输入OpenMP选项并回车: 1)启用OpenMP(Angle阶段和Crnn阶段多线程并行执行), 2)禁用OpenMP(Angle阶段和Crnn阶段单线程执行)"
-set BUILD_OPENMP=ON
-set /p flag=
-if %flag% == 1 (set BUILD_OPENMP=ON)^
-else if %flag% == 2 (set BUILD_OPENMP=OFF)^
-else (echo 输入错误！Input Error!)
-echo.
-
 echo "使用静态库时，编译出来的可执行文件较大，但部署起来比较方便。"
 echo "使用动态库时，编译出来的可执行文件较小，但部署的时候记得把dll复制到可执行文件目录"
 echo "请选择要使用的Opencv库选项并回车: 1)Static静态库，2)Shared动态库"
@@ -98,8 +90,8 @@ popd
 GOTO:EOF
 
 :cmakeParams
-echo cmake -G "%~1" -A "%~2" -DOCR_OPENMP=%BUILD_OPENMP% -DOCR_JNI=%BUILD_JNI% -DOCR_CLIB=%BUILD_CLIB% -DOCR_STATIC=%BUILD_STATIC% -DOCR_VULKAN=%BUILD_NCNN_VULKAN% ..
-cmake -G "%~1" -A "%~2" -DOCR_OPENMP=%BUILD_OPENMP% -DOCR_JNI=%BUILD_JNI% -DOCR_CLIB=%BUILD_CLIB% -DOCR_STATIC=%BUILD_STATIC% -DOCR_VULKAN=%BUILD_NCNN_VULKAN% ..
+echo cmake -G "%~1" -A "%~2" -DOCR_JNI=%BUILD_JNI% -DOCR_CLIB=%BUILD_CLIB% -DOCR_STATIC=%BUILD_STATIC% -DOCR_VULKAN=%BUILD_NCNN_VULKAN% ..
+cmake -G "%~1" -A "%~2" -DOCR_JNI=%BUILD_JNI% -DOCR_CLIB=%BUILD_CLIB% -DOCR_STATIC=%BUILD_STATIC% -DOCR_VULKAN=%BUILD_NCNN_VULKAN% ..
 GOTO:EOF
 
 @ENDLOCAL

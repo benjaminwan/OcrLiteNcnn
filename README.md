@@ -152,8 +152,8 @@ opencv或onnxruntime使用动态库时，参考下列方法：
 
 build.sh编译参数
 
-1. ```OCR_OPENMP=ON```：启用(ON)或禁用(OFF) AngleNet和CrnnNet阶段使用OpenMP并行运算。
-2. ```OCR_LIB=ON```： 启用(ON)或禁用(OFF) ON时编译为jni lib，OFF时编译为可执行文件
+1. ```OCR_JNI=ON```： 启用(ON)或禁用(OFF) ON时编译为jni lib，OFF时默认编译为可执行文件
+2. ```OCR_CLIB=ON```： 启用(ON)或禁用(OFF) ON时编译为c lib，OFF时默认编译为可执行文件
 3. ```OCR_STATIC=ON```： 启用(ON)或禁用(OFF) ON时选择opencv静态库进行编译，OFF时则选择动态库编译
 4. ```OCR_VULKAN=ON```： 启用(ON)或禁用(OFF) ON时选择ncnn(带vulkan)静态库进行编译，OFF时则选择不带vulkan的版本编译
 
