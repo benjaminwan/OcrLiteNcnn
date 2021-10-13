@@ -39,24 +39,31 @@ OcrLiteNcnn/models
 
 ### 依赖的第三方库下载
 
-1. 下载opencv和ncnn，[下载地址](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases/v1.0)
+1. 下载opencv，[下载地址](https://github.com/RapidAI/OpenCVBuilder/releases)
 
-* OpenCv动态库：opencv-(版本号)-sharedLib.7z
-* OpenCv静态库：opencv-(版本号)-staticLib.7z
-* ncnn静态库含vulkan：ncnn-(版本号)-vulkan-staticLib.7z
-* ncnn静态库：ncnn-(版本号)-staticLib.7z
-* 把压缩包解压到项目根目录，解压后目录结构
+* OpenCV静态库：opencv-(版本号)-平台.7z，
+* 把压缩包解压到项目根目录，解压后目录结构如下
+
+```
+OcrLiteNcnn
+    ├── opencv-static
+```
+
+2. 下载ncnn，[下载地址](https://github.com/benjaminwan/NcnnBuilder/releases)
+
+* ncnn静态库含vulkan：ncnn-(版本号)-vulkan-平台.7z
+* ncnn静态库：ncnn-(版本号)-平台.7z
 * 注意：本demo从v1.5.1开始，去除crnn的lstm外循环改用框架的实现，需要配合ncnn>=20210124，请注意选择ncnn版本。
+* 把压缩包解压到项目根目录，解压后目录结构
 
 ```
 OcrLiteNcnn
     ├── ncnn-static
     ├── ncnn-vulkan-static
-    ├── opencv-shared
     ├── opencv-static
 ```
 
-2. Vulkan SDK，[下载地址](https://vulkan.lunarg.com/sdk/home)
+3. Vulkan SDK，[下载地址](https://vulkan.lunarg.com/sdk/home)
 
 * 如果想编译ncnn带vulkan支持的版本，则必须先安装Vulkan SDK。
 * 一般下载最新版即可，当前最新版1.2.162.0
