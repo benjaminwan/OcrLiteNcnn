@@ -23,6 +23,10 @@ PAUSE
 exit
 )
 
+if exist %EXE_PATH%\install\bin (
+SET EXE_PATH=%EXE_PATH%\install\bin
+)
+
 %EXE_PATH%\OcrLiteNcnn.exe --version
 %EXE_PATH%\OcrLiteNcnn.exe --models models ^
 --det dbnet_op ^

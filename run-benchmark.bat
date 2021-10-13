@@ -26,6 +26,10 @@ PAUSE
 exit
 )
 
+if exist %EXE_PATH%\install\bin (
+SET EXE_PATH=%EXE_PATH%\install\bin
+)
+
 %EXE_PATH%\benchmark.exe --version
 %EXE_PATH%\benchmark.exe --models models ^
 --det dbnet_op ^
