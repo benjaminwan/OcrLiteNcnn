@@ -1,13 +1,19 @@
 # OcrLiteNcnn
 
+### 联系方式
+
+QQ①群：994929053 QQ②群：820132154
+
 ### Project下载
 
-* 有整合好源码和依赖库的完整工程项目，文件比较大，可到Q群共享内下载，找以Project开头的压缩包文件
+* 整合好源码和依赖库的完整工程项目，文件比较大，可到Q群共享内下载，以Project开头的压缩包文件为源码工程，例：Project_OcrLiteNcnn-版本号.7z
 * 如果想自己折腾，则请继续阅读本说明
 
 ### Demo下载(win、mac、linux)
 
-编译好的demo文件可以到Q群共享内下载 或者[Gitee下载](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases)
+* 编译好的demo，可以在release中下载，或者Q群共享内下载
+* 或者[Gitee下载](https://gitee.com/benjaminwan/ocr-lite-ncnn/releases)
+* 或者[Github下载](https://github.com/benjaminwan/OcrLiteNcnn/releases)
 
 ### 介绍
 
@@ -20,6 +26,14 @@ ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理
 详情请查看 [https://github.com/ouyanghuiyu/chineseocr_lite](https://github.com/ouyanghuiyu/chineseocr_lite)
 
 采用ncnn神经网络前向计算框架[https://github.com/Tencent/ncnn](https://github.com/Tencent/ncnn)
+
+### 更新说明
+
+#### 2021-10-13 update
+
+* opencv 4.5.4
+* ncnn 20210720
+* 优化编译脚本和测试脚本
 
 ### 模型下载
 
