@@ -49,22 +49,22 @@ echo.
 GOTO:MainExec
 
 :PrepareCpuX64
-set EXE_PATH=win-cpu-x64
+set EXE_PATH=win-BIN-CPU-x64\Release
 set GPU_INDEX=-1
 GOTO:EOF
 
 :PrepareCpuX86
-set EXE_PATH=win-cpu-x86
+set EXE_PATH=win-BIN-CPU-Win32\Release
 set GPU_INDEX=-1
 GOTO:EOF
 
 :PrepareGpuX64
-set EXE_PATH=win-gpu-x64
-set GPU_INDEX=1
+set EXE_PATH=win-BIN-GPU-x64\Release
+set GPU_INDEX=0
 GOTO:EOF
 
 :PrepareGpuX86
-set EXE_PATH=win-gpu-x86
+set EXE_PATH=win-BIN-GPU-Win32\Release
 set GPU_INDEX=0
 GOTO:EOF
 

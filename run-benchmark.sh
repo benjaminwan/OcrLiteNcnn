@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
+export DYLD_LIBRARY_PATH=./ncnn-static/macos/lib
+
 function PrepareVar(){
 echo "Gpu版本测试前请先安装Vulkan SDK v1.2.162.0，https://vulkan.lunarg.com/sdk/home"
 echo "请输入测试选项并回车: 1)CPU, 2)GPU"
 read -p "" RUN_ARCH
 if [ $RUN_ARCH == 1 ]; then
-    EXE_PATH=${sysOS}-CPU
+    EXE_PATH=${sysOS}-bin-cpu
     GPU_INDEX=-1
 elif [ $RUN_ARCH == 2 ]; then
-    EXE_PATH=${sysOS}-GPU
+    EXE_PATH=${sysOS}-bin-gpu
     GPU_INDEX=0
 else
   echo -e "输入错误！Input Error!"
