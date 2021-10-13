@@ -73,7 +73,7 @@ chmod a+x install-vulkan-linux.sh
 
 1. Windows 10 x64
 2. macOS 10.15
-3. Linux Ubuntu 1604 x64
+3. Linux Ubuntu 1804 x64
 
 **注意：以下说明仅适用于本机编译。如果需要交叉编译为arm等其它平台(参考android)，则需要先交叉编译所有第三方依赖库(ncnn、opencv)，然后再把依赖库整合替换到本项目里。**
 
@@ -82,7 +82,7 @@ chmod a+x install-vulkan-linux.sh
 #### Windows nmake编译
 
 1. 安装VS2017或VS2019，安装时，至少选中'使用C++的桌面开发'
-2. cmake请自行下载&配置，[下载地址](https://cmake.org/download/)
+2. cmake>=3.12请自行下载&配置，[下载地址](https://cmake.org/download/)
 3. 开始菜单打开"x64 Native Tools Command Prompt for VS 2019"或"适用于 VS2017 的 x64 本机工具"，并转到本项目根目录
 4. 运行```build.bat```并按照提示输入选项，最后选择'编译成可执行文件'
 5. 编译完成后运行```run-test.bat```进行测试(注意修改脚本内的目标图片路径)
@@ -111,7 +111,7 @@ chmod a+x install-vulkan-linux.sh
 ### Mac编译说明
 
 1. macOS Catalina 10.15.x，安装Xcode 12.1，并安装Xcode Command Line Tools, 终端运行```xcode-select –install```
-2. 自行下载安装HomeBrew，cmake >=3.1[下载地址](https://cmake.org/download/)
+2. 自行下载安装HomeBrew，cmake >=3.17[下载地址](https://cmake.org/download/)
 3. libomp: ```brew install libomp```
 4. 终端打开项目根目录，```./build.sh```并按照提示输入选项，最后选择'编译成可执行文件'
 5. 测试：```./run-test.sh```(注意修改脚本内的目标图片路径)
@@ -130,9 +130,9 @@ opencv或onnxruntime使用动态库时，参考下列方法：
 
 ### Linux编译说明
 
-1. Ubuntu16.04 LTS 或其它发行版
+1. Ubuntu18.04 LTS 其它发行版(请自行编译依赖库opencv和ncnn，或自行适配官方发布的动态库)
 2. ```sudo apt-get install build-essential```
-3. g++>=5，cmake>=3.1[下载地址](https://cmake.org/download/)
+3. g++>=5，cmake>=3.17[下载地址](https://cmake.org/download/)
 4. 终端打开项目根目录，```./build.sh```并按照提示输入选项，最后选择'编译成可执行文件'
 5. 测试：```./run-test.sh```(注意修改脚本内的目标图片路径)
 6. 编译JNI动态运行库(可选，可用于java调用)
