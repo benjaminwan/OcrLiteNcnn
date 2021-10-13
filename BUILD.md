@@ -5,11 +5,15 @@
 1. 下载opencv，[下载地址](https://github.com/RapidAI/OpenCVBuilder/releases)
 
 * OpenCV静态库：opencv-(版本号)-平台.7z，
-* 把压缩包解压到项目根目录，解压后目录结构如下
+* 把压缩包解压到项目根目录，windows平台需要注意目录层次，解压后目录结构如下
 
 ```
-OcrLiteNcnn
-    ├── opencv-static
+OcrLiteNcnn/opencv-static
+├── OpenCVWrapperConfig.cmake
+├── linux
+├── macos
+├── windows-x64
+└── windows-x86
 ```
 
 2. 下载ncnn，[下载地址](https://github.com/benjaminwan/NcnnBuilder/releases)
@@ -17,13 +21,22 @@ OcrLiteNcnn
 * ncnn静态库含vulkan：ncnn-(版本号)-vulkan-平台.7z
 * ncnn静态库：ncnn-(版本号)-平台.7z
 * 注意：本demo从v1.5.1开始，去除crnn的lstm外循环改用框架的实现，需要配合ncnn>=20210124，请注意选择ncnn版本。
-* 把压缩包解压到项目根目录，解压后目录结构
+* 把压缩包解压到项目根目录，windows平台需要注意目录层次，解压后目录结构如下
 
 ```
-OcrLiteNcnn
-    ├── ncnn-static
-    ├── ncnn-vulkan-static
-    ├── opencv-static
+OcrLiteNcnn/ncnn-static
+├── NcnnWrapperConfig.cmake
+├── linux
+├── macos
+├── windows-x64
+└── windows-x86
+
+OcrLiteNcnn/ncnn-vulkan-static
+├── NcnnWrapperConfig.cmake
+├── linux
+├── macos
+├── windows-x64
+└── windows-x86
 ```
 
 3. Vulkan SDK，[下载地址](https://vulkan.lunarg.com/sdk/home)
