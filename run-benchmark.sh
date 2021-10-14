@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-export DYLD_LIBRARY_PATH=./ncnn-static/macos/lib
-
 function PrepareVar(){
 echo "Gpu版本测试前请先安装Vulkan SDK v1.2.162.0，https://vulkan.lunarg.com/sdk/home"
 echo "请输入测试选项并回车: 1)CPU, 2)GPU"

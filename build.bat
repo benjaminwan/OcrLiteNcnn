@@ -68,41 +68,4 @@ cmake --build . --config %BUILD_TYPE% --target install
 popd
 GOTO:EOF
 
-:makeAllExe
-mkdir win-cpu-%VSCMD_ARG_TGT_ARCH%
-pushd win-cpu-%VSCMD_ARG_TGT_ARCH%
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_JNI=OFF -DOCR_CLIB=OFF -DOCR_STATIC=ON -DOCR_VULKAN=OFF ..
-nmake
-popd
-
-mkdir win-gpu-%VSCMD_ARG_TGT_ARCH%
-pushd win-gpu-%VSCMD_ARG_TGT_ARCH%
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_JNI=OFF -DOCR_CLIB=OFF -DOCR_STATIC=ON -DOCR_VULKAN=ON ..
-nmake
-popd
-
-mkdir win-jni-cpu-%VSCMD_ARG_TGT_ARCH%
-pushd win-jni-cpu-%VSCMD_ARG_TGT_ARCH%
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_JNI=ON -DOCR_CLIB=OFF -DOCR_STATIC=ON -DOCR_VULKAN=OFF ..
-nmake
-popd
-
-mkdir win-jni-gpu-%VSCMD_ARG_TGT_ARCH%
-pushd win-jni-gpu-%VSCMD_ARG_TGT_ARCH%
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_JNI=ON -DOCR_CLIB=OFF -DOCR_STATIC=ON -DOCR_VULKAN=ON ..
-nmake
-popd
-
-mkdir win-clib-cpu-%VSCMD_ARG_TGT_ARCH%
-pushd win-clib-cpu-%VSCMD_ARG_TGT_ARCH%
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_JNI=OFF -DOCR_CLIB=ON -DOCR_STATIC=ON -DOCR_VULKAN=OFF ..
-nmake
-popd
-
-mkdir win-clib-gpu-%VSCMD_ARG_TGT_ARCH%
-pushd win-clib-gpu-%VSCMD_ARG_TGT_ARCH%
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DOCR_JNI=OFF -DOCR_CLIB=ON -DOCR_STATIC=ON -DOCR_VULKAN=ON ..
-nmake
-popd
-
 @ENDLOCAL
