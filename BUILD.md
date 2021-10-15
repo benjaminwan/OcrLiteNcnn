@@ -6,7 +6,8 @@
 
 * OpenCV静态库：opencv-(版本号)-平台.7z，
 * 把压缩包解压到项目根目录，windows平台需要注意目录层次，解压后目录结构如下
-
+* windows平台请选择vs2017版本(也可以用于vs2019编译)
+* 程序版本v1.6.0需要opencv 4.5.4
 ```
 OcrLiteNcnn/opencv-static
 ├── OpenCVWrapperConfig.cmake
@@ -21,6 +22,7 @@ OcrLiteNcnn/opencv-static
 * ncnn静态库含vulkan：ncnn-(版本号)-vulkan-平台.7z
 * ncnn静态库：ncnn-(版本号)-平台.7z
 * 注意：本demo从v1.5.1开始，去除crnn的lstm外循环改用框架的实现，需要配合ncnn>=20210124，请注意选择ncnn版本。
+* 程序版本v1.6.0需要ncnn 20210720
 * 把压缩包解压到项目根目录，windows平台需要注意目录层次，解压后目录结构如下
 
 ```
