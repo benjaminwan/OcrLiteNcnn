@@ -35,6 +35,11 @@ ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理
 
 ### 更新说明
 
+#### 2021-10-25 update
+
+* fix:win编译打包C动态库缺少lib文件
+* 编译c动态库添加打包include
+
 #### 2021-10-13 update
 
 * opencv 4.5.4
