@@ -46,7 +46,7 @@ bool CrnnNet::initModel(const std::string &pathStr, const std::string &keysPath)
         fprintf(stderr, "missing keys\n");
         return false;
     }
-    printf("total keys size(%lu)\n", keys.size());
+    //printf("total keys size(%lu)\n", keys.size());
     return true;
 }
 

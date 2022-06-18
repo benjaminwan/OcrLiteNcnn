@@ -21,6 +21,7 @@
 * 各平台可执行文件：linux-bin.7z、macos-bin.7z、windows-bin.7z
 * 用于java的jni库：linux-jni.7z、macos-jni.7z、windows-jni.7z
 * 用于C的动态库：linux-clib.7z、macos-clib.7z、windows-clib.7z
+* C动态库调用范例:[OcrLiteNcnnLibTest](https://github.com/benjaminwan/OcrLiteNcnnLibTest)
 * 注意：linux编译平台为ubuntu18.04，如果你的linux版本无法运行demo，请自行从源码编译依赖库和完整项目。
 
 ### 介绍
@@ -37,16 +38,22 @@ ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理
 
 ### 更新说明
 
-#### 2021-10-25 update
-
-* fix:win编译打包C动态库缺少lib文件
-* 编译c动态库添加打包include
-
 #### 2021-10-13 update
 
 * opencv 4.5.4
 * ncnn 20210720
 * 优化编译脚本和测试脚本
+
+#### 2021-10-25 update
+
+* fix:win编译打包C动态库缺少lib文件
+* 编译c动态库添加打包include
+
+#### 2021-10-25 update
+
+* opencv 4.6.0
+* ncnn 20220420，模型格式变化，需重新转换db和angle模型
+* 修改c lib导出方法，支持C调用
 
 ### 模型下载
 
@@ -75,7 +82,7 @@ OcrLiteNcnn/models
 
 ### FAQ
 
-#### macOS缺少openmp
+#### macOS缺少openmp(从1.7.0开始已不再依赖openmp)
 
 ```brew install libomp```
 
