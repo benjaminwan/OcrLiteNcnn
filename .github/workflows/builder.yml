@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-18.04
 
     env:
-      NCNN_VERSION: 20210720
-      CPU_PKG_NAME: ncnn-20210720-ubuntu1804
-      GPU_PKG_NAME: ncnn-20210720-ubuntu1804-vulkan
-      CV_VERSION: 4.5.4
-      CV_PKG_NAME: opencv-4.5.4-ubuntu1804
+      NCNN_VERSION: 20220420
+      CPU_PKG_NAME: ncnn-20220420-ubuntu1804
+      GPU_PKG_NAME: ncnn-20220420-ubuntu1804-vulkan
+      CV_VERSION: 4.6.0
+      CV_PKG_NAME: opencv-4.6.0-ubuntu1804
 
     steps:
       # 检出代码
@@ -107,11 +107,11 @@ jobs:
     runs-on: macos-latest
 
     env:
-      NCNN_VERSION: 20210720
-      CPU_PKG_NAME: ncnn-20210720-macos1015
-      GPU_PKG_NAME: ncnn-20210720-macos1015-vulkan
-      CV_VERSION: 4.5.4
-      CV_PKG_NAME: opencv-4.5.4-macos1015
+      NCNN_VERSION: 20220420
+      CPU_PKG_NAME: ncnn-20220420-macos1015
+      GPU_PKG_NAME: ncnn-20220420-macos1015-vulkan
+      CV_VERSION: 4.6.0
+      CV_PKG_NAME: opencv-4.6.0-macos1015
 
     steps:
       # 检出代码
@@ -210,11 +210,11 @@ jobs:
     runs-on: windows-2016
 
     env:
-      NCNN_VERSION: 20210720
-      CPU_PKG_NAME: ncnn-20210720-windows-vs2017
-      GPU_PKG_NAME: ncnn-20210720-windows-vs2017-vulkan
-      CV_VERSION: 4.5.4
-      CV_PKG_NAME: opencv-4.5.4-windows-vs2017
+      NCNN_VERSION: 20220420
+      CPU_PKG_NAME: ncnn-20220420-windows-vs2017
+      GPU_PKG_NAME: ncnn-20220420-windows-vs2017-vulkan
+      CV_VERSION: 4.6.0
+      CV_PKG_NAME: opencv-4.6.0-windows-vs2017
 
     steps:
       # 检出代码
