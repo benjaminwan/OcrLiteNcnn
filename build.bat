@@ -32,6 +32,15 @@ else if %flag% == 3 (set BUILD_OUTPUT="CLIB")^
 else (echo 输入错误！Input Error!)
 echo.
 
+echo "引用库类型: 1)静态CRT(mt), 2)动态CRT(md)"
+echo "注意：范例工程默认集成mt版库"
+set /p flag=
+if %flag% == 1 (
+    set MT_ENABLED="True"
+)^
+else (set MT_ENABLED="False")
+echo.
+
 echo "VS版本: 1)vs2017-x64，2)vs2017-x86, 3)vs2019-x64, 4)vs2019-x86"
 set BUILD_CMAKE_T="v141"
 set BUILD_CMAKE_A="x64"
@@ -60,7 +69,8 @@ pushd win-%BUILD_OUTPUT%-%BUILD_NCNN_VULKAN%-%BUILD_CMAKE_A%
 
 cmake -T "%BUILD_CMAKE_T%,host=x64" -A %BUILD_CMAKE_A% ^
   -DCMAKE_INSTALL_PREFIX=install ^
-  -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DOCR_OUTPUT=%BUILD_OUTPUT% -DOCR_VULKAN=%BUILD_NCNN_VULKAN% ..
+  -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DOCR_OUTPUT=%BUILD_OUTPUT% ^
+  -DOCR_VULKAN=%BUILD_NCNN_VULKAN% -DOCR_BUILD_CRT=%MT_ENABLED% ..
 cmake --build . --config %BUILD_TYPE% -j %NUMBER_OF_PROCESSORS%
 cmake --build . --config %BUILD_TYPE% --target install
 

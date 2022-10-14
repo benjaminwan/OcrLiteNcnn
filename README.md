@@ -50,11 +50,17 @@ ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理
 * fix:win编译打包C动态库缺少lib文件
 * 编译c动态库添加打包include
 
-#### 2021-10-25 update
+#### 2022-06-18 update
 
 * opencv 4.6.0
 * ncnn 20220420，模型格式变化，需重新转换db和angle模型
 * 修改c lib导出方法，支持C调用
+
+#### 2022-10-14 update
+
+* ncnn: 20220729
+* vulkan: 1.2.189.0
+* 范例工程windows版默认使用mt版依赖库
 
 ### 模型下载
 

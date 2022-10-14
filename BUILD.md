@@ -8,6 +8,8 @@
 * 把压缩包解压到项目根目录，windows平台需要注意目录层次，解压后目录结构如下
 * 程序版本v1.6.0依赖opencv 4.5.4
 * 程序版本v1.7.0依赖opencv 4.6.0
+* windows平台分为mt和md版，mt代表静态链接CRT，md代表动态链接CRT
+* v1.8.0范例工程默认使用mt版，之前的版本则为md版
 ```
 OcrLiteNcnn/opencv-static
 ├── OpenCVWrapperConfig.cmake
@@ -24,8 +26,10 @@ OcrLiteNcnn/opencv-static
 * 注意：本demo从v1.5.1开始，去除crnn的lstm外循环改用框架的实现，需要配合ncnn>=20210124，请注意选择ncnn版本。
 * 程序版本v1.6.0需要ncnn 20210720
 * 程序版本v1.7.0依赖ncnn 20220420，此版本模型格式支持有变化，原有的db和angle模型需重新用onnx2ncnn工具转换
+* 程序版本v1.8.0依赖ncnn 20220729
 * 把压缩包解压到项目根目录，windows平台需要注意目录层次，解压后目录结构如下
-
+* windows平台分为mt和md版，mt代表静态链接CRT，md代表动态链接CRT
+* v1.8.0范例工程默认使用mt版，之前的版本则为md版
 ```
 OcrLiteNcnn/ncnn-static
 ├── NcnnWrapperConfig.cmake
