@@ -49,15 +49,10 @@ OcrLiteNcnn/ncnn-vulkan-static
 3. Vulkan SDK，[下载地址](https://vulkan.lunarg.com/sdk/home)
 
 * 如果想编译ncnn带vulkan支持的版本，则必须先安装Vulkan SDK。
-* 一般下载最新版即可，当前最新版1.2.162.0
+* 一般下载最新版即可，当前最新版1.3.236.0，安装时选中所有组件。
 * Windows：直接双击安装。
-* macOS：加载dmg后，终端执行```./install_vulkan.py```
-* Linux: 解压tar.gz文件后，把scripts文件夹里的install-vulkan-linux.sh复制到解压后的文件夹，并打开终端执行
-
-```
-chmod a+x install-vulkan-linux.sh
-./install-vulkan-linux.sh
-```
+* macOS：加载dmg后，直接双击安装。
+* Linux: 解压tar.gz文件到某个路径，并配置export VULKAN_SDK=解压路径/1.3.236.0/x86_64, export PATH=解压路径/1.3.236.0/x86_64/bin:$PATH
 
 ### 编译环境
 
