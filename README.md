@@ -63,6 +63,11 @@ ChineseOcr Lite Ncnn，超轻量级中文OCR PC Demo，支持ncnn推理
 * vulkan: 1.2.189.0
 * 范例工程windows版默认使用mt版依赖库
 
+#### 2023-02-14 update
+
+* ncnn: 20221128
+* vulkan: 1.3.236.0
+
 ### 模型下载
 
 [模型下载地址](https://github.com/ouyanghuiyu/chineseocr_lite/tree/onnx/models_ncnn)
